@@ -8,7 +8,7 @@ MiniSite.Browser = {
 };
 
 //Simple JSONP Implementation
-MiniSite.loadJSData = function(sUrl, sCharset, fCallback){
+MiniSite.loadJSData = function( sUrl, sCharset, fCallback ){
 	var _script = document.createElement('script');
 	_script.setAttribute('charset', sCharset);
 	_script.setAttribute('type', 'text/javascript');
@@ -17,14 +17,26 @@ MiniSite.loadJSData = function(sUrl, sCharset, fCallback){
 	if(MiniSite.Browser.ie){
 		_script.onreadystatechange = function(){
 			if(this.readyState == 'loaded' || this.readyState == 'complete'){
-				setTimeout(function(){try{fCallback();}catch(e){}}, 50);
+				setTimeout(function(){
+					try{
+						fCallback();
+					}catch(e){}
+				}, 50);
 			}
 		};
 	}else if(MiniSite.Browser.moz){
 		_script.onload = function(){
-			setTimeout(function(){try{fCallback();}catch(e){}}, 50);
+			setTimeout(function(){
+				try{
+					fCallback();
+				}catch(e){}
+			}, 50);
 		};
 	}else{
-		setTimeout(function(){try{fCallback();}catch(e){}}, 50);
+		setTimeout(function(){
+			try{
+				fCallback();
+			}catch(e){}
+		}, 50);
 	}
 };

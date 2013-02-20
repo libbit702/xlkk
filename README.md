@@ -1,21 +1,53 @@
 # 迅雷看看前端开发JS库模块开发 #
 
 ## 1. 为什么 ##
+**为往圣继绝学，为万世开太平**
+
 <ul>
 	<li>全局变量污染，例如Minisite定义导致的各种冲突，涛哥，松林应该有印象</li>
-	<li>代码重用，国鹏上次的演讲有提到不一定用大型框架，另一种方案是根据自己需求写轻量级的JS。如果能重用的话会省很多事</li>
+	<li>代码重用，国鹏上次的演讲有提到不一定用大型框架，另一种方案是根据自己需求写轻量级的JS。如果能将这些平时积累起来的JS重用的话会省很多事(每次开发专题都要copy minisite getcookie vip_index有木有)</li>
 </ul>
+
 
 ## 2. 怎么做 ##
 模块化分割和整合全部使用RequireJS，原因如下：
 <ul>
-	<li>看看首页开发的时候金华已经率先用RequireJS这么处理了，但是有一些不太理想的地方，很多require到的代码依然使用的是全局变量，如LAZY，Research，Minisite等</li>
+	<li>看看首页开发的时候金华已经率先使用了RequireJS，但是有一些不太理想的地方，很多require到的代码依然使用的是全局变量，如LAZY，Search，Minisite等</li>
 	<li>RequireJS是AMD规范实现的最好者之一</li>
-	<li>RequireJS提供了一个JS压缩工具，开发完成后可以利用它最小化require引用到的所有JS（还没有使用过，要装java或者Node，反正我之前开发JS是从不压缩的……）</li>
+	<li>RequireJS提供了一个JS压缩工具，开发完成后可以利用它最小化require引用到的所有JS</li>
 </ul>
-requireJS的具体使用方法可以参考[http://requirejs.org/](http://requirejs.org/ "requireJS")，我在index.html中也有使用
 
-我想重点提到的是RequireJS中Module的定义方法[如何定义模块](http://requirejs.org/docs/api.html#define)（大家重点做的是这部分工作，把日常用到的JS写成模块），这样每个模块的实例化都会在RequireJS的callback中作为一个参数传入，避免了一开始提到的全局变量污染，我在src文件夹中的js中有使用，但不太明确是否是标准写法
+### 准备工作 ###
+[RequireJS](http://requirejs.org/ "requireJS") 
 
-## 3. 做好没 ##
-为了检测开发的模块是否可以工作，我引入了QUnit作为测试工具，具体使用方法可以参考[http://qunitjs.com/](http://qunitjs.com/)，也可以参考在tests文件夹下对Vip模块的简单测试（写测试用例这块还没怎么看懂，不过例子倒是跑起来了）
+[JSLINT for Sublime](https://github.com/fbzhong/sublime-jslint "Sublime JSLINT") 或者最原始的 [JSLINT](https://github.com/douglascrockford/JSLint "JSLINT")
+
+[QUnit](https://github.com/jquery/qunit "QUnit") JS单元测试工具，为jQuery所使用
+
+[R.JS](https://github.com/jrburke/r.js "r.js") RequireJS提供的用于Node和Rhino的适配器及JS压缩工具
+
+[Node](http://nodejs.org/download/ "NodeJS") 这里主要是为R.js提供基本环境，要配合NodeJS才能进行压缩
+
+### 目录结构 ###
+
+ -- appDir | 根目录
+
+ 	-- build | 压缩文件的输出目录，供index.html调用
+
+ 	-- src | 我们根据RequireJS规范自己编写的JS模块文件目录，包括RequireJS本身
+
+ 	-- tests | 测试用例目录
+
+ 	-- index.html | 调用RequireJS的入口文件，用于RequireJS的使用示例 
+
+ 	-- r.js | 主要用于实际项目中，完成开发后将所有涉及到的JS压缩到同一个文件中，减少HTTP请求数，需要[配合Node使用](http://requirejs.org/docs/optimization.html "使用方法说明页")
+
+ 	-- READ.md | 就是现在读到的这个文件啦！
+
+ 	-- 编码规范 | 自己胡乱从[jQuery](http://contribute.jquery.org/style-guide/ "Style Guide")翻译的，主要还是靠JSLINT
+
+
+我想重点提到的是RequireJS中[如何定义模块](http://requirejs.org/docs/api.html#define)，这样每个模块的实例化都会在RequireJS的callback中作为一个参数传入，避免了一开始提到的全局变量污染
+
+## 3. 结束语 ##
+大家平时开发这么辛苦，很多是产品的原因(你懂得)，更多情况也是因为没有一个统一规范的文档(人走茶凉，代码全部重新推翻，你更懂得)，衷心希望大家都能参与进来，为后来人铺路，做牛顿脚下的巨人(其实是我JS太菜，帆神做个付费的，雄志做个说说的，大湿做个订阅的，求带领啊！)

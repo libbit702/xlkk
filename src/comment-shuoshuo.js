@@ -1,4 +1,4 @@
-define(['cookie', 'm', 'js-lib'], function(c, m, j){
+define(['cookie', 'minisite'], function(c, m){
 	c.setDomain('kankan.com');
 
 	/*===============Function 定义=====================*/
@@ -12,16 +12,6 @@ define(['cookie', 'm', 'js-lib'], function(c, m, j){
 		} else {      
 			return (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;  
 		}
-	}
-
-	function showUserTips(ele,cuid) {
-		if (cuid == userid) {
-			ele.style.display = "block";
-		}
-	}
-
-	function hideUserTips(ele) {
-		ele.previousSiblings()[0].style.display = "none";
 	}
 
 	function onAction(ele,type,content){
@@ -56,25 +46,28 @@ define(['cookie', 'm', 'js-lib'], function(c, m, j){
 	}
 
 	function check_num(){
-		if($('postContent').value == "我来说两句"){$('scommentSubmit').onclick =  function(){return false;};return;}
-			var leftWordCounter = 140-$('postContent').value.length;
-			$('scommentInputCount').innerHTML = leftWordCounter+'字';
-			if (leftWordCounter<0) {
-				$('scommentSubmit').className = 'false';
-				$('scommentInputCount').className = 'num num_over';
-				$('scommentSubmit').onclick =  function(){return false;};
-				$('scommentSubmit').title = '';
-			} else if (leftWordCounter<140) {
-				$('scommentSubmit').className = '';
-				$('scommentInputCount').className = 'num';
-				$('scommentSubmit').onclick = function(){commonIframe.commonIframePost($('postContent').value);}
-				$('scommentSubmit').title = '立即发布';
-			} else {
-				$('scommentSubmit').className = 'false';
-				$('scommentInputCount').className = 'num';
-				$('scommentSubmit').onclick = function(){ return false;;}
-				$('scommentSubmit').title = '';
-			}
+		if($('postContent').value == "我来说两句"){
+			$('scommentSubmit').onclick = function(){return false;};
+			return;
+		}
+		var leftWordCounter = 140-$('postContent').value.length;
+		$('scommentInputCount').innerHTML = leftWordCounter+'字';
+		if (leftWordCounter<0) {
+			$('scommentSubmit').className = 'false';
+			$('scommentInputCount').className = 'num num_over';
+			$('scommentSubmit').onclick =  function(){return false;};
+			$('scommentSubmit').title = '';
+		} else if (leftWordCounter<140) {
+			$('scommentSubmit').className = '';
+			$('scommentInputCount').className = 'num';
+			$('scommentSubmit').onclick = function(){commonIframe.commonIframePost($('postContent').value);}
+			$('scommentSubmit').title = '立即发布';
+		} else {
+			$('scommentSubmit').className = 'false';
+			$('scommentInputCount').className = 'num';
+			$('scommentSubmit').onclick = function(){ return false;;}
+			$('scommentSubmit').title = '';
+		}
 	}
 
 	function interval(){
@@ -347,15 +340,18 @@ define(['cookie', 'm', 'js-lib'], function(c, m, j){
 	/*===============主函数 定义=====================*/
 	function CommentShuoshuo (config) {
 	    this._baseurl = 'http://api.t.kankan.com/common_comment.json';
-	    this._url_params = {'type':'topics', 'objName':'CSObj', 'page':'1', 'perpage':'10', 'sid': 0};
+	    this._url_params = {'type':'topics', 'objName':'CSObj', 'page':'1', 'perpage':'10', 'sid': 0, 'stitle':''};
 	    Object.extend(this._url_params, config);
 	}
 
 	CommentShuoshuo.prototype = {
 	    buildComment:function(){
-	        var params = '';
-	        var url = this._baseurl + '?' + Object.toQueryString(this._url_params);
-	        m.loadJSData.load(url,'utf-8', this.makeCommentHtml);
+	        var params = '',
+	        url = this._baseurl + '?' + Object.toQueryString(this._url_params),
+	        _self = this;
+	        m.loadJSData.load(url,'utf-8', function(){
+	        	_self.makeCommentHtml();
+	        });
 	    },  
 
 	    getSid:function(){
@@ -381,7 +377,7 @@ define(['cookie', 'm', 'js-lib'], function(c, m, j){
 	                        //sCommentHtml += ' class="bbn"';
 	                    }
 	                    sCommentHtml += '>';
-	                    sCommentHtml += '<a target="_blank" href="http://t.kankan.com/'+oCommentWeibo.userid+'" alt="'+oCommentWeibo.userinfo.nickname+'" onmouseover="showUserTips(this,'+oCommentWeibo.userid+')"><img src="'+oCommentWeibo.userinfo.avatar['40']+'" width="40" height="40"></a>';
+	                    sCommentHtml += '<a target="_blank" href="http://t.kankan.com/'+oCommentWeibo.userid+'" alt="'+oCommentWeibo.userinfo.nickname+'"><img src="'+oCommentWeibo.userinfo.avatar['40']+'" width="40" height="40"></a>';
 	                    sCommentHtml += '<p class="p1"><span class="userinfo"><a target="_blank" href="http://t.kankan.com/'+oCommentWeibo.userid+'" alt="'+oCommentWeibo.userinfo.nickname+'">'+oCommentWeibo.userinfo.nickname+'</a></span><span class="votenum"><span id="useful_num_'+oCommentWeibo._id+'">'+oCommentWeibo.useful_num+'</span> <a href="javascript:void(0)" onclick="commonIframe.voteUseful(\''+oCommentWeibo._id+'\',this);return false;">有用</a></span></p>';
 	                    sCommentHtml += '<p class="des">'+oCommentWeibo.content+'</p>';
 	                    sCommentHtml += '<p class="function"><span class="data">'+oCommentWeibo.pub_time+'</span>';

@@ -4,5 +4,5 @@ require.config({
 });
 
 require(['focuspic'], function(f) {    
-    f.init(5,'focus_box_','focus_sbox_');
+    f.init(3000, 5,'focus_box_','focus_sbox_');
 });

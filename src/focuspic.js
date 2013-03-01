@@ -8,20 +8,22 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 		sideid:"",
 		totalcount:0,
 		fxNodes:[],
-	    init:function(num,bid,sid,sideid){
+		interval:5000,
+	    init:function(interval,num,bid,sid,sideid){
 			this.bid = bid;
 			this.sid = sid;
-			this.totalcount=num;
+			this.totalcount = num;
+			this.interval = interval;
 			var _self = this;
 			for(var i=0;i<num;i++){
-				e.addEventHandler($(sid+"img_"+i),'mouseover', function(){
+				e.addEventHandler($(sid+i),'mouseover', function(){
 					_self.pause();
-					_self.onone(parseInt(this.id.replace(_self.sid+'img_', ''), 10));
+					_self.onone(parseInt(this.id.replace(_self.sid, ''), 10));
 				});
 
-				e.addEventHandler($(sid+"img_"+i),'mouseout',function(){
+				e.addEventHandler($(sid+i),'mouseout',function(){
 					_self.play();
-					_self.onone(parseInt(this.id.replace(_self.sid+'img_', ''), 10));
+					_self.onone(parseInt(this.id.replace(_self.sid, ''), 10));
 				});
 
 				e.addEventHandler($(bid+i),'mouseover',function(){
@@ -40,7 +42,10 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 		onone:function(num){
 			if(num==this.page)return;
 			$(this.sid+this.page).className="";
-			$(this.sid+num).className="on";				
+			$(this.sid+num).className="on";
+			for(var i=0;i<this.fxNodes.length;i++){
+				this.fxNodes[i].stop();
+			}
 			this.fxNodes[this.page].fadeOut({callback:(function(){this.style.display='none'}).call(this.fxNodes[this.page].el)});
 			this.fxNodes[num].fadeIn({callback:(function(){this.style.display='block'}).call(this.fxNodes[num].el)});			
 			this.page=num;
@@ -49,8 +54,8 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 			clearInterval(this.timeSet);
 			var _self = this;
 			this.timeSet=setInterval(function(){
-				_self.prev();
-			},5000);
+				_self.next();
+			},this.interval);
 		},
 		pause:function(){
 			clearTimeout(this.timeSet);

@@ -10,11 +10,12 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 		fxNodes:[],
 		interval:5000,
 	    init:function(interval,num,bid,sid,sideid){
-			this.bid = bid;
-			this.sid = sid;
-			this.totalcount = num;
+			var _self = this,
+			this.bid = bid,
+			this.sid = sid,
+			this.totalcount = num,
 			this.interval = interval;
-			var _self = this;
+			
 			for(var i=0;i<num;i++){
 				e.addEventHandler($(sid+i),'mouseover', function(){
 					_self.pause();

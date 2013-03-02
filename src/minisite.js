@@ -1,4 +1,5 @@
 define(function(){
+    'use strict';
     var MiniSite = {};
     //Check User Browser type by UA
     MiniSite.Browser = {
@@ -17,7 +18,7 @@ define(function(){
         document.getElementsByTagName('head')[0].appendChild(_script);
         if(MiniSite.Browser.ie){
             _script.onreadystatechange = function(){
-                if(this.readyState == 'loaded' || this.readyState == 'complete'){
+                if(this.readyState === 'loaded' || this.readyState === 'complete'){
                     setTimeout(function(){
                         try{
                             fCallback();

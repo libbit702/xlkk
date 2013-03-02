@@ -1,4 +1,5 @@
 define([], function(c){
+    'use strict';
     var Vip = {
         berylType: 0,
         products: null

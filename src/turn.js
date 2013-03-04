@@ -10,8 +10,8 @@ define(['dom', 'eventutil'],function(d,e){
 			Turn.config[conf] = config[conf];
 		}
 		Turn.node = new FX.Node(config.div);
-		e.addEventHandler(d.$(config.prev), 'click', Turn.pre);
-		e.addEventHandler(d.$(config.next), 'click', Turn.next);
+		e.addEventHandler(d(config.prev).getEle(), 'click', Turn.pre);
+		e.addEventHandler(d(config.next).getEle(), 'click', Turn.next);
 	};
 
 	Turn.pre=function(){
@@ -52,14 +52,14 @@ define(['dom', 'eventutil'],function(d,e){
 		});
 		Turn.config.current=index;
 		if(Turn.config.current==Turn.config.allpage-1){			
-			d.addClass(d.$(Turn.config.next), Turn.config.offCls);
-			d.removeClass(d.$(Turn.config.prev), Turn.config.offCls);
+			d(Turn.config.next).addClass(Turn.config.offClsRight);
+			d(Turn.config.prev).removeClass(Turn.config.offClsLeft);
 		}else if(Turn.config.current==0){
-			d.addClass(d.$(Turn.config.prev), Turn.config.offCls);
-			d.removeClass(d.$(Turn.config.next), Turn.config.offCls);
+			d(Turn.config.next).removeClass(Turn.config.offClsRight);
+			d(Turn.config.prev).addClass(Turn.config.offClsLeft);			
 		}else{
-			d.removeClass(d.$(Turn.config.prev), Turn.config.offCls);
-			d.removeClass(d.$(Turn.config.next), Turn.config.offCls);
+			d(Turn.config.next).removeClass(Turn.config.offClsRight);
+			d(Turn.config.prev).removeClass(Turn.config.offClsLeft);			
 		}
 	};
 

@@ -1,40 +1,42 @@
-define(['eventutil', 'fx', 'node'], function(e, f, n){
-	function $(id){return document.getElementById(id);}
-	var focusPic = {
-		page:0,
-		timeSet:false,
-		bid:"",
-		sid:"",
-		sideid:"",
-		totalcount:0,
-		fxNodes:[],
-		interval:5000,
+define(['eventutil', 'fx', 'node', 'dom'], function(e, f, n, d){
+	function FocusPic(){
+		this.page = 0;
+		this.timeSet = false;
+		this.bid = "";
+		this.sid = "";
+		this.sideid = "";
+		this.totalcount = 0;
+		this.fxNodes = [];
+		this.interval = 5000
+	}
+	FocusPic.prototype = {		
 	    init:function(interval,num,bid,sid,sideid){
-			var _self = this,
 			this.bid = bid,
 			this.sid = sid,
 			this.totalcount = num,
-			this.interval = interval;
+			this.interval = interval
+			var _self = this;
 			
 			for(var i=0;i<num;i++){
-				e.addEventHandler($(sid+i),'mouseover', function(){
-					_self.pause();
-					_self.onone(parseInt(this.id.replace(_self.sid, ''), 10));
-				});
+				(function(i){
+					e.addEventHandler(d(sid+i).getEle(),'mouseover', function(){
+						_self.pause();
+						_self.onone(i, 10);
+					});
 
-				e.addEventHandler($(sid+i),'mouseout',function(){
-					_self.play();
-					_self.onone(parseInt(this.id.replace(_self.sid, ''), 10));
-				});
+					e.addEventHandler(d(sid+i).getEle(),'mouseout',function(){
+						_self.play();
+						_self.onone(i, 10);
+					});
 
-				e.addEventHandler($(bid+i),'mouseover',function(){
-					_self.pause()
-				});
+					e.addEventHandler(d(bid+i).getEle(),'mouseover',function(){
+						_self.pause()
+					});
 
-				e.addEventHandler($(bid+i),'mouseout',function(){
-					_self.play()
-				});
-
+					e.addEventHandler(d(bid+i).getEle(),'mouseout',function(){
+						_self.play()
+					});
+				})(i);
 				this.fxNodes[i] = new FX.Node(this.bid+i);
 			}
 
@@ -42,13 +44,17 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 		},
 		onone:function(num){
 			if(num==this.page)return;
-			$(this.sid+this.page).className="";
-			$(this.sid+num).className="on";
+			d(this.sid+this.page).removeClass('on');
+			d(this.sid+num).addClass('on');
 			for(var i=0;i<this.fxNodes.length;i++){
 				this.fxNodes[i].stop();
 			}
-			this.fxNodes[this.page].fadeOut({callback:(function(){this.style.display='none'}).call(this.fxNodes[this.page].el)});
-			this.fxNodes[num].fadeIn({callback:(function(){this.style.display='block'}).call(this.fxNodes[num].el)});			
+			this.fxNodes[this.page].fadeOut({
+				callback:(function(){this.style.display='none'}).call(this.fxNodes[this.page].el)
+			});
+			this.fxNodes[num].fadeIn({
+				callback:(function(){this.style.display='block'}).call(this.fxNodes[num].el)
+			});			
 			this.page=num;
 		},
 		play:function(){
@@ -68,5 +74,5 @@ define(['eventutil', 'fx', 'node'], function(e, f, n){
 			this.onone(this.page<=0?this.totalcount-1:this.page-1);
 		}
 	}
-	return focusPic;
+	return FocusPic;
 });

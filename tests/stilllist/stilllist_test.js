@@ -3,35 +3,32 @@ require.config({
     urlArgs: "rd="+Math.random()
 });
 
-require(["stilllist",'eventutil'], function(s, e) {    
+require(['stilllist','eventutil','dom'], function(s, e, d) {    
     s.init({pgCount:8, pgInterval:3000});
-    s.auto();
-    function $(id){
-        return document.getElementById(id);
-    }
+    //s.auto();
 
-    var s1 = $('s1'),
-    s2 = $('s2');
-    for(var i=0; i<s2.children.length;i++){
-        var item = s2.children[i];
+    var s1 = d('s1'),
+    s2 = d('s2');
+    for(var i=0; i<s2.getEle().children.length;i++){
+        var item = s2.getEle().children[i];
         e.addEventHandler(item, 'click', function(){
             item_id = this.attributes.id.value.replace('s2_', '');
             s.jump(item_id);
         });
     }
-    e.addEventHandler($('s1_pre'), 'click', function(){
+    e.addEventHandler(d('s1_pre').getEle(), 'click', function(){
         s.jump('prev');
     });
 
-    e.addEventHandler($('s1_next'), 'click', function(){
+    e.addEventHandler(d('s1_next').getEle(), 'click', function(){
         s.jump('next');
     });
 
-    e.addEventHandler($('s2_pre'), 'click', function(){
+    e.addEventHandler(d('s2_pre').getEle(), 'click', function(){
         s.jump('prev');
     });
 
-    e.addEventHandler($('s2_next'), 'click', function(){
+    e.addEventHandler(d('s2_next').getEle(), 'click', function(){
         s.jump('next');
     });
 });

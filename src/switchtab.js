@@ -1,30 +1,36 @@
-define(['dom'], function(d){
-	var switchTab = {
-		config:{},
-		tabs:[],
-		lists:[]
+define(['dom','eventutil'], function(d,e){
+	function SwitchTab(){
+		this.config = {}; 
+		this.tabs = [];
+		this.lists = [];
 	};
 
-	switchTab.init = function(config) {
-		for(conf in config){
-			switchTab.config[conf] = config[conf];
-		}
-		for(var i=0;i<switchTab.config.count;i++) {
-			switchTab.tabs[i] = d.$(switchTab.config.identifyTab+i);
-			switchTab.lists[i] = d.$(switchTab.config.identifyList+i);				
-		}		
-	};
-
-	switchTab.show = function(index){
-		for(var i=0;i<switchTab.config.count;i++) {
-			if (i != index) {
-				d.removeClass(switchTab.tabs[index], switchTab.config.cnon);
-				switchTab.lists[index].style.display="none" ;
+	SwitchTab.prototype = {
+		init : function(config) {
+			for(conf in config){
+				this.config[conf] = config[conf];
 			}
+			var _self = this;
+			for(var i=0;i<this.config.count;i++) {
+				this.tabs[i] = d.$(this.config.identifyTab+i);
+				this.lists[i] = d.$(this.config.identifyList+i);	
+				(function(i){
+		            e.addEventHandler(_self.tabs[i], 'mouseover', function(){_self.show(i)}); 
+		        })(i)	
+			}		
+		},
+
+		show : function(index){
+			for(var i=0;i<this.config.count;i++) {
+				if (i != index) {
+					d.removeClass(this.tabs[i], this.config.cnon);
+					this.lists[i].style.display="none" ;
+				}
+			}
+			d.addClass(this.tabs[index], this.config.cnon);
+			this.lists[index].style.display="";
 		}
-		d.addClass(switchTab.tabs[index], switchTab.config.cnon);
-		switchTab.lists[index].style.display="";
 	};
 
-	return switchTab;
+	return SwitchTab;
 })

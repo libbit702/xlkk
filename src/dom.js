@@ -1,22 +1,51 @@
 define(function(){
-	var dom = {};
-	dom.$ = function(id){
-		return document.getElementById(id);
-	};
-
-	dom.hasClass = function(obj, cls) {
-        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    var Dom = function( id ) {
+        return new Dom.prototype.init( id );
     };
 
-    dom.addClass = function(obj, cls) {
-        if (!dom.hasClass(obj, cls)) obj.className += " " + cls;
-    };
+    Dom.prototype = {
+        constructor: Dom,
 
-    dom.removeClass = function(obj, cls) {
-        if (dom.hasClass(obj, cls)) {
-            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            obj.className = obj.className.replace(reg, ' ');
+        init:function(id){
+            this.node = document.getElementById(id);
+            return this;
+        },
+
+        hasClass : function(cls) {
+            return this.node.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        },
+
+        addClass : function(cls) {
+            if (!this.hasClass(cls)) {
+                this.node.className += " " + cls;
+            }
+            return this;
+        },
+
+        removeClass : function(cls) {
+            if (this.hasClass(cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                this.node.className = this.node.className.replace(reg, ' ');
+            }
+            return this;
+        },
+
+        getEle : function(){
+            return this.node;
+        },
+
+        hide: function(){
+            this.node.style.display = 'none';
+            return this;
+        },
+
+        show: function(){
+            this.node.style.display = '';
+            return this;
         }
     };
-    return dom;
+
+    Dom.prototype.init.prototype = Dom.prototype;
+
+    return Dom;
 })

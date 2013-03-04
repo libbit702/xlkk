@@ -3,6 +3,7 @@ require.config({
     urlArgs: "rd="+Math.random()
 });
 
+
 require(["switchtab"], function(s) {
     s1 = new s;
     s1.init({

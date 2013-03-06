@@ -42,6 +42,36 @@ define(function(){
         show: function(){
             this.node.style.display = '';
             return this;
+        },
+
+        setHtml: function(html){
+            this.node.innerHTML = html;
+            return this;
+        },
+
+        getHtml: function(){
+            return this.node.innerHTML;
+        },
+
+        setStyle: function (prop, value){
+            if(prop == 'opacity'){
+                this.node.style.filter = "alpha(opacity=" + value * 100 + ")";
+                this.node.style.opacity = value;
+            }else{
+                prop = this.toCamelCase(prop);
+                this.node.style[prop] = value;
+            }
+            return this;
+        },
+
+        toCamelCase: function(str){            
+            var parts = str.split('-'), camel = parts[0], len = parts.length;
+            if(len > 1){
+                for(var i=1; i < len; i++){
+                    camel += parts[i].charAt(0).toUpperCase() + parts[i].substring(1);
+                }
+            }
+            return camel;
         }
     };
 

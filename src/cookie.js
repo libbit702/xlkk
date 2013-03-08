@@ -1,4 +1,4 @@
-define([], function(){
+define(function(){
     var Cookie = {
         host : window.location.host
     };
@@ -25,8 +25,7 @@ define([], function(){
     };
 
     Cookie.setDomain = function(domain){
-        this.host = domain;
-        document.domain = this.host;
+        document.domain = domain;
     };
     return Cookie;
 });

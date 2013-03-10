@@ -3,7 +3,7 @@ require.config({
     urlArgs: "rd="+Math.random()
 });
 
-require(["fx","node","turn"], function(f,n,t) {
+require(["turn"], function(t) {
     t.init({ 
     	current:0,
     	allpage:3, 

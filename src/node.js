@@ -14,13 +14,11 @@
  * callback	   A function to execute once the animation is complete
  * scope       The context for which the callback will be executed in
  */
- 
-(function(win){
-	
+define(['fx'], function(FX){
 	/**
 	 * Useful shortcuts for commonly used objects
 	 */
-	var FX = win.FX, doc = win.document, empty = function(){};	  
+	var win = window, doc = win.document, empty = function(){};	  
 	
 	/**
 	 * Constructor - initiate with the new operator
@@ -277,4 +275,6 @@
 		}
 	};
 
-})(this);
+	return FX;
+})
+ 

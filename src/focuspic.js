@@ -1,4 +1,4 @@
-define(['eventutil', 'fx', 'node', 'dom'], function(e, f, n, d){
+define(['eventutil', 'node', 'dom'], function(e, FX, d){
 	function FocusPic(){
 		this.page = 0;
 		this.timeSet = false;

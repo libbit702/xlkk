@@ -4,12 +4,11 @@
  * Licensed under the MIT license.
  */
 
-(function(win){
-	
+define(function(){
 	/**
 	 * Useful shortcuts for commonly used objects
 	 */
-	var doc = win.document, view = doc.defaultView, toString = Object.prototype.toString, cache = {}, empty = function(){}, getStyle, 
+	var win = window, doc = win.document, view = doc.defaultView, toString = Object.prototype.toString, cache = {}, empty = function(){}, getStyle, 
 	
 	/**
 	 * Regular expressions used to parse a CSS color declaration and extract the rgb values
@@ -25,7 +24,7 @@
 	 * @param {Function} callback The function to be executed after the animation is complete (optional)
 	 * @param {Object} ctx The context for which the callback will be executed in (optional)
 	 */
-	FX = win.FX = function(el, attributes, duration, transition, callback, ctx){
+	FX = function(el, attributes, duration, transition, callback, ctx){
 		this.el = getElement(el);
 		this.attributes = attributes;
 		this.duration = duration || 0.7;
@@ -364,4 +363,5 @@
 		return new Date().getTime();
 	};
 
-})(this);
+	return FX;
+})

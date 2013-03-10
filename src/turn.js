@@ -1,4 +1,4 @@
-define(['dom', 'eventutil'],function(d,e){
+define(['dom', 'eventutil','node'],function(d,e,FX){
 	var Turn = {
 		config:{},
 		node:'',

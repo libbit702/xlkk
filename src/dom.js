@@ -72,6 +72,39 @@ define(function(){
                 }
             }
             return camel;
+        },
+
+        trim: function(str){
+            return str.replace(/(^\s*)(\s*$)/g,'');
+        },
+
+        getPos: function(){
+            var p={"t":0,"l":0}, o=this.node;
+            while(o){
+                p.t+=o.offsetTop;
+                p.l+=o.offsetLeft;
+                o=o.offsetParent;
+            }
+            return p;
+        },
+
+        isInView: function(){
+            var t1=document.body.scrollTop + document.documentElement.scrollTop,
+            t2=t1 + document.documentElement.clientHeight,
+            l1=document.documentElement.scrollLeft,
+            l2=l1 + document.documentElement.clientWidth,
+            o=this.node;
+
+            if(o){
+                p=this.getPos();
+                if((p.t>=t1||p.t+o.clientHeight>=t1)&&p.t<=t2&&(p.l>=l1||p.l+obj.clientWidth>=l1)&&p.l<=l2){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
         }
     };
 

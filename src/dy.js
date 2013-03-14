@@ -1,6 +1,6 @@
 define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 	var G_SUBS_MOVIES_ID_STR = '';
-	var G_SUBS_STATUS = new Array();
+	var G_SUBS_STATUS = [];
 	var DYData = {
 		getDYNumUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=list&',
 		submitDYUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=sub&',
@@ -16,7 +16,6 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 		statKey: '',
 		isNoDY:ioCtrl.ioReader('nosubscribe')=='1',
 		onlineDate:G_MOVIE_INFO.onlinedate,
-
 		randUrl: function(){
 			return '&r='+new Date().getTime();
 		},
@@ -24,13 +23,11 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 			if(this.peerID==null) {return}
 			var str = '更新通知我';
 			this.initPage(str);
-			if(this.$("updateDesc") && this.$("updateDesc").innerHTML!="()"){
-				this.$("updateDesc").style.display="";
-			}
+			
 			if(this.isNoDY){
-				this.$display('dySubmit','');
+				d('dySubmit').show();
 			}else{
-				loadJSDataByTimeslice(this.queryDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), this.showDY, [], true, 4000);
+				m.loadJSData(this.queryDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), 'utf-8', this.showDY);
 			}
 		},
 		showDY: function(){
@@ -52,20 +49,19 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 			d('dyStat').show();
 		},
 		doCancleDY: function(){
-			this.$display('dyTips','none');
-			this.$display('dyCancle','none');
+			d('dyTips').hide();
+			d('dyCancle').hide();
 			this.showDYStat(0);
-			loadJSDataByTimeslice(this.cancleDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), this.cancledDY, [], true, 4000);
+			m.loadJSData(this.cancleDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), 'utf-8', this.cancledDY);
 		},
-
 		doSubmitDY: function(){
 			this.showDYStat(0);
-			loadJSDataByTimeslice(this.submitDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), this.submitedDY, [], true, 4000);
+			m.loadJSData(this.submitDYUrl+'peerid='+this.peerID+'&movieid='+this.movieID+this.randUrl(), 'utf-8', this.submitedDY);
 		},
 		cancledDY: function(){
 			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==-1){
-				DYData.$display('dyStat','none');
-				DYData.$display('dySubmit','');
+				d('dyStat').hide();
+				d('dySubmit').show();
 			}else{
 				DYData.showDYStat(1);
 			}
@@ -80,16 +76,6 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 				DYData.showDYStat(2);
 			}
 			G_SUBS_STATUS[DYData.statKey]=null;
-		},
-		$C: function(tag, attr, hide){
-			var obj = document.createElement(tag);
-			for(var o in attr){
-				obj[o] = attr[o];
-			}
-			if(hide||false){
-				obj.style.display='none';
-			}
-			return obj;
 		},
 		init: function(){
 			this.statKey = 's'+this.movieID;

@@ -1,4 +1,5 @@
 define(function(){
+    var isIE=(navigator.appName).indexOf("Microsoft")!=-1;
 	var ioCtrl = {
 		ver:0,
 		_isGet:false,
@@ -75,13 +76,7 @@ define(function(){
 		ioWriter:function(name,value,hours){
 			if(this.getDapctrlVer()>200000){
 				this.ioCtrlWriter(name,value,hours||null);
-			}/*else{
-				if(hours){
-					setCookie(name,value,hours);
-				}else{
-					setCookie(name,value);
-				}
-			}*/
+			}
 		},
 		ioReader:function(name){
 			if(this.getDapctrlVer()>200000){
@@ -153,7 +148,19 @@ define(function(){
 			ifr.style.display = "none";
 			ifr.onload = function(){ioCtrl.kkCrossObj = window.frames["kkCrossIfr"].G_KK_CROSS};
 			document.body.insertBefore(ifr,document.body.firstChild);
-		}
+		},
+        getPeerID: function(bit){
+            var peerId = null;
+            try{
+                if(32 == bit){
+                    peerId = this.dapctrl.Get("sPeerID32")||null;
+                }else{
+                    peerId = this.dapctrl.Get("sPeerID")||null;
+                }
+            }catch(e){}
+            return peerId;
+        }
 	};
+    ioCtrl.init();
 	return ioCtrl;
 })

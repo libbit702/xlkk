@@ -12,7 +12,7 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 		movType: G_MOVIE_TYPE,
 		movTitle: G_MOVIE_TITLE,
 		subtype: G_MOVIE_DATA.subtype,
-		peerID: G_CORE_INIT.getPeerID(),
+		peerID: ioCtrl.getPeerID(),
 		statKey: '',
 		isNoDY:ioCtrl.ioReader('nosubscribe')=='1',
 		onlineDate:G_MOVIE_INFO.onlinedate,
@@ -35,9 +35,9 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 		},
 		showDY: function(){
 			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==0){
-				DYData.$display('dySubmit','');
+				d('dySubmit').show();
 			}else{
-				DYData.$display('dyCancle','');
+				d('dyCancle').show();
 			}
 		},
 		showDYStat: function(statType){
@@ -48,8 +48,8 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 				case 2: str='<span>(订阅失败)</span><a href="javascript:void(0)" onclick="DYData.doSubmitDY();return false;">重试</a>';break;
 				default:;
 			}
-			this.$('dyStat').innerHTML = str;
-			this.$display('dyStat','');
+			d('dyStat').html(str);
+			d('dyStat').show();
 		},
 		doCancleDY: function(){
 			this.$display('dyTips','none');
@@ -74,9 +74,8 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 		submitedDY: function(){
 			if(G_DAPCTRL_VER>200000){ioCtrl.ioWriter('nosubscribe','0')}
 			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==1){
-				DYData.$display('dyStat','none');
-				DYData.$display('dyCancle','');
-				
+				d('dyStat').hide();
+				d('dyCancle').show();
 			}else{
 				DYData.showDYStat(2);
 			}

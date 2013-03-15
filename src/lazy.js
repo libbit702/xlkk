@@ -1,4 +1,4 @@
-define(['eventutil'], function(){
+define(['eventutil'], function(e){
 	var LAZY = {};
 	LAZY=(function(){
 		var pResizeTimer = null;
@@ -10,7 +10,6 @@ define(['eventutil'], function(){
 		function resize_run(){
 			var min={};
 			var max={};
-			//min.Top=document.documentElement.scrollTop;
 	        min.Top = document.body.scrollTop + document.documentElement.scrollTop;
 			min.Left=document.documentElement.scrollLeft;
 			max.Top=min.Top+document.documentElement.clientHeight;
@@ -23,19 +22,9 @@ define(['eventutil'], function(){
 					var width = img.clientWidth;
 					var height = img.clientHeight;
 					var wh=position(img);
-					if(
-						(wh.Top>=min.Top && wh.Top<=max.Top && wh.Left>=min.Left && wh.Left<=max.Left)
-						||
-						((wh.Top+height)>=min.Top && wh.Top<=max.Top && (wh.Left+width)>=min.Left && wh.Left<=max.Left))
-					{
-						//img.src=_img.src;
-						//alert("document.getElementById(\""+i+"\").src=\""+_img.src+"\";") ;
-						//setTimeout("document.getElementById(\""+i+"\").src=\""+_img.src+"\";",100) ;
-
+					if( (wh.Top>=min.Top && wh.Top<=max.Top && wh.Left>=min.Left && wh.Left<=max.Left) || ((wh.Top+height)>=min.Top && wh.Top<=max.Top && (wh.Left+width)>=min.Left && wh.Left<=max.Left)){
 						(function(imgobj,realsrc){
-							setTimeout(
-								function() {imgobj.src = realsrc ;}, 100
-								) ;
+							setTimeout(function() {imgobj.src = realsrc ;}, 100) ;
 						})(img,_img.src) ;
 						delete imgs[i];
 					}

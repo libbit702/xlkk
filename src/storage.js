@@ -1,4 +1,4 @@
-define(['domReady'], function(){
+define(['domReady','json'], function(domReady, JSON){
     var w             = window,
     DB_NAME           = 'xlkk_storage_lite',
     DB_DISPLAYNAME    = 'XLKK StorageLite data',
@@ -43,9 +43,8 @@ define(['domReady'], function(){
         }
     } catch (ex) {
         storageMode = MODE_NOOP;
-    }
-
-
+    }   
+    
     var StorageLite = {        
         clear: function () {},
         
@@ -83,13 +82,14 @@ define(['domReady'], function(){
 
             // Mobile Safari in iOS 5 loses track of storageDriver when page is
             // restored from the bfcache. This fixes the reference.
+            /*
             Y.Node.DOM_EVENTS.pageshow = 1;
 
             Y.on('pageshow', function () {
                 storageDriver = w.localStorage;
             });
-
-            Y.mix(StorageLite, {
+            */
+            Object.extend(StorageLite, {
                 clear: function () {
                     storageDriver.clear();
                 },
@@ -102,14 +102,12 @@ define(['domReady'], function(){
                         return null;
                     }
                 }
-            }, true);
+            });
 
         } else if (storageMode === MODE_GECKO) {
-
             // Gecko globalStorage methods. Supported by Firefox 2 and 3.0.
             storageDriver = w.globalStorage[w.location.hostname];
-
-            Y.mix(StorageLite, {
+            Object.extend(StorageLite, {
                 clear: function () {
                     for (var key in storageDriver) {
                         if (storageDriver.hasOwnProperty(key)) {
@@ -118,7 +116,6 @@ define(['domReady'], function(){
                         }
                     }
                 },
-
                 getItem: function (key, json) {
                     try {
                         return json ? JSON.parse(storageDriver[key].value) :
@@ -127,16 +124,11 @@ define(['domReady'], function(){
                         return null;
                     }
                 }
-            }, true);
-
+            });
         }
-
-        StorageLite.fire(EVT_READY);
-
     } else if (storageMode === MODE_DB || storageMode === MODE_USERDATA) {
-
         // Common methods shared by the database and userdata implementations.
-        Y.mix(StorageLite, {
+        Object.extend(StorageLite, {
             clear: function () {
                 data = {};
                 StorageLite._save();
@@ -168,20 +160,20 @@ define(['domReady'], function(){
                 StorageLite._save();
             }
 
-        }, true);
+        });
 
         if (storageMode === MODE_DB) {
 
             // Database storage methods. Supported by Safari 3.1 and 3.2.
             storageDriver = w.openDatabase(DB_NAME, DB_VERSION, DB_DISPLAYNAME, DB_MAXSIZE);
 
-            Y.mix(StorageLite, {
+            Object.extend(StorageLite, {
                 _save: function () {
                     storageDriver.transaction(function (t) {
                         t.executeSql("REPLACE INTO " + DB_NAME + " (name, value) VALUES ('data', ?)", [JSON.stringify(data)]);
                     });
                 }
-            }, true);
+            });
 
             storageDriver.transaction(function (t) {
                 t.executeSql("CREATE TABLE IF NOT EXISTS " + DB_NAME + "(name TEXT PRIMARY KEY, value TEXT NOT NULL)");
@@ -193,18 +185,16 @@ define(['domReady'], function(){
                             data = {};
                         }
                     }
-
-                    StorageLite.fire(EVT_READY);
                 });
             });
 
         } else if (storageMode === MODE_USERDATA) {
 
             // userData storage methods. Supported by IE5, 6, and 7.
-            storageDriver = d.createElement('span');
+            storageDriver = document.createElement('span');
             storageDriver.addBehavior('#default#userData');
 
-            Y.mix(StorageLite, {
+            Object.extend(StorageLite, {
                 _save: function () {
                     var _data = JSON.stringify(data);
 
@@ -215,10 +205,10 @@ define(['domReady'], function(){
                         throw new Y.StorageFullError();
                     }
                 }
-            }, true);
+            });
 
-            Y.on('domready', function () {
-                d.body.appendChild(storageDriver);
+            domReady(function () {
+                document.body.appendChild(storageDriver);
                 storageDriver.load(USERDATA_PATH);
 
                 try {
@@ -226,18 +216,11 @@ define(['domReady'], function(){
                 } catch (ex) {
                     data = {};
                 }
-
-                StorageLite.fire(EVT_READY);
             });
 
         }
 
-    } else {
-
-        // Fire the ready event for browsers that only support the noop mode.
-        StorageLite.fire(EVT_READY);
-
-    }
-
+    } 
+    return StorageLite;
 });
 

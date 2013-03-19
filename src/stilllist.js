@@ -1,14 +1,14 @@
 define(function(){
 	var stillList = {
 		config:{
-			pgIndex : 0,
-			pgCount : 0,
-			pgSector : 0,
-			pgSectorLen : 5,
-			pgInterval : 5,
-			pgTimer:0,
-			pgSmallPrefix:'s2_',
-			pgBigPrefix:'s1_'
+			pgIndex : 0,//当前播放图片在群组中的位置
+			pgCount : 0,//需要展示的图片个数
+			pgSector : 0,//可视区域的最左侧图片位置
+			pgSectorLen : 5,//可视区域个数
+			pgInterval : 5000,//自动轮播间隔时长，毫秒
+			pgTimer:0,//计时器句柄
+			pgSmallPrefix:'s2_',//小图的ID前缀
+			pgBigPrefix:'s1_'//大图的ID前缀
 		},
 		
 		

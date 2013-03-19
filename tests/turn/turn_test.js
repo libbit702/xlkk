@@ -3,7 +3,8 @@ require.config({
     urlArgs: "rd="+Math.random()
 });
 
-require(["turn"], function(t) {
+require(["turn"], function(Turn) {
+    var t = new Turn();
     t.init({ 
     	current:0,
     	allpage:3, 
@@ -16,6 +17,7 @@ require(["turn"], function(t) {
     	offClsRight:'off',
     	auto:true,
     	divSibling:'div_movierecom_1',
-    	time:3000
+    	time:3000,
+        speed:0.3
     });
 });

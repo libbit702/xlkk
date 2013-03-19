@@ -1,4 +1,4 @@
-define(function(){
+define(function(){    
     var isIE=(navigator.appName).indexOf("Microsoft")!=-1;
 	var ioCtrl = {
 		ver:0,
@@ -22,6 +22,10 @@ define(function(){
 		init:function(){
 			if(!this.getDapctrl()){
 				if(!isIE){
+                    if(document.getElementById('dapctrl')){
+                        this.dapctrl = document.getElementById('dapctrl');
+                        return false;
+                    } 
 					var browserPlugins = navigator.plugins;
 					for (var bpi=browserPlugins.length-1; bpi>=0; bpi--) {
 						try {

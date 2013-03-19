@@ -73,6 +73,7 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
 		}
 		//FX的animate方法调整marginleft
 		Turn.node.animate({
+            duration:Turn.config.speed,
 			attributes:{'marginLeft':{to:go}},
 			callback:function(){
 				Turn.config.clickflag = 0;

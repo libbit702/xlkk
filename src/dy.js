@@ -1,29 +1,28 @@
-define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
-	var G_SUBS_MOVIES_ID_STR = '';
-	var G_SUBS_STATUS = [];
+define(['ioctrl','dom','minisite'], function(ic, d, m){    
+	if(!!window.G_SUBS_STATUS === false){
+        window.G_SUBS_STATUS = [];
+    }
 	var DYData = {
 		getDYNumUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=list&',
 		submitDYUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=sub&',
 		cancleDYUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=unsub&',
 		queryDYUrl : 'http://api.subscribe.kankan.com/subscribe.php?action=status&',
 		statDYUrl  : 'http://kkpgv2.xunlei.com?u=dingyue&u1=',
+        /*
 		movieID: G_MOVIEID,
 		movDesc: G_OTHER_DESC,
 		movType: G_MOVIE_TYPE,
 		movTitle: G_MOVIE_TITLE,
 		subtype: G_MOVIE_DATA.subtype,
-		peerID: ioCtrl.getPeerID(),
+        */
+		peerID: ic.getPeerID(),
 		statKey: '',
-		isNoDY:ioCtrl.ioReader('nosubscribe')=='1',
-		onlineDate:G_MOVIE_INFO.onlinedate,
+		isNoDY:ic.ioReader('nosubscribe')=='1',
 		randUrl: function(){
 			return '&r='+new Date().getTime();
 		},
 		checkShowDY: function(){
 			if(this.peerID==null) {return}
-			var str = '更新通知我';
-			this.initPage(str);
-			
 			if(this.isNoDY){
 				d('dySubmit').show();
 			}else{
@@ -45,7 +44,7 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 				case 2: str='<span>(订阅失败)</span><a href="javascript:void(0)" onclick="DYData.doSubmitDY();return false;">重试</a>';break;
 				default:;
 			}
-			d('dyStat').html(str);
+			d('dyStat').setHtml(str);
 			d('dyStat').show();
 		},
 		doCancleDY: function(){
@@ -68,7 +67,7 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 			G_SUBS_STATUS[DYData.statKey]=null;
 		},
 		submitedDY: function(){
-			if(G_DAPCTRL_VER>200000){ioCtrl.ioWriter('nosubscribe','0')}
+			if(ic.getDapctrlVer()>200000){ic.ioWriter('nosubscribe','0')}
 			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==1){
 				d('dyStat').hide();
 				d('dyCancle').show();
@@ -77,8 +76,11 @@ define(['ioctrl','dom','minisite'], function(ioCtrl, d, m){
 			}
 			G_SUBS_STATUS[DYData.statKey]=null;
 		},
-		init: function(){
-			this.statKey = 's'+this.movieID;
+		init: function(config){
+            for(conf in config){
+                DYData[conf] = config[conf];
+            }
+            this.statKey = 's'+this.movieID;
 			G_SUBS_STATUS[this.statKey]=null;
 			this.checkShowDY();
 		}

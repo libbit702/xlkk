@@ -1,5 +1,9 @@
 define(function(){
-    var Dom = function( id ) {
+    var core_version = "@VERSION",
+        core_trim = core_version.trim,
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,    
+    
+    Dom = function( id ) {
         return new Dom.prototype.init( id );
     };
 
@@ -64,20 +68,6 @@ define(function(){
             return this;
         },
 
-        toCamelCase: function(str){            
-            var parts = str.split('-'), camel = parts[0], len = parts.length;
-            if(len > 1){
-                for(var i=1; i < len; i++){
-                    camel += parts[i].charAt(0).toUpperCase() + parts[i].substring(1);
-                }
-            }
-            return camel;
-        },
-
-        trim: function(str){
-            return str.replace(/(^\s*)(\s*$)/g,'');
-        },
-
         getPos: function(){
             var p={"t":0,"l":0}, o=this.node;
             while(o){
@@ -105,6 +95,24 @@ define(function(){
             }else{
                 return false;
             }
+        }
+    };
+
+    Dom.toCamelCase = function(str){            
+        var parts = str.split('-'), camel = parts[0], len = parts.length;
+        if(len > 1){
+            for(var i=1; i < len; i++){
+                camel += parts[i].charAt(0).toUpperCase() + parts[i].substring(1);
+            }
+        }
+        return camel;
+    };
+
+    Dom.trim = function(text){
+        if(core_trim && !core_trim.call("\uFEFF\xA0")){
+            return text == null ? "" : core_trim.call( text );
+        } else {
+            return text == null ? "" : ( text + "" ).replace( rtrim, "" );
         }
     };
 

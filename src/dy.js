@@ -30,10 +30,13 @@ define(['ioctrl','dom','minisite'], function(ic, d, m){
 			}
 		},
 		showDY: function(){
-			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==0){
-				d('dySubmit').show();
+			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==0){                
+				//d('dySubmit').show();
 			}else{
-				d('dyCancle').show();
+                if(DYData.callback){
+                    DYData.callback();
+                }
+				//d('dyCancle').show();
 			}
 		},
 		showDYStat: function(statType){

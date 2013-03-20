@@ -7,15 +7,7 @@ define(['ioctrl','dom','minisite'], function(ic, d, m){
 		submitDYUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=sub&',
 		cancleDYUrl: 'http://api.subscribe.kankan.com/subscribe.php?action=unsub&',
 		queryDYUrl : 'http://api.subscribe.kankan.com/subscribe.php?action=status&',
-		statDYUrl  : 'http://kkpgv2.xunlei.com?u=dingyue&u1=',
-        /*
-		movieID: G_MOVIEID,
-		movDesc: G_OTHER_DESC,
-		movType: G_MOVIE_TYPE,
-		movTitle: G_MOVIE_TITLE,
-		subtype: G_MOVIE_DATA.subtype,
-        */
-		peerID: ic.getPeerID(),
+        peerID: ic.getPeerID(),
 		statKey: '',
 		isNoDY:ic.ioReader('nosubscribe')=='1',
 		randUrl: function(){
@@ -33,9 +25,7 @@ define(['ioctrl','dom','minisite'], function(ic, d, m){
 			if(G_SUBS_STATUS[DYData.statKey]!=null && G_SUBS_STATUS[DYData.statKey]==0){                
 				//d('dySubmit').show();
 			}else{
-                if(DYData.callback){
-                    DYData.callback();
-                }
+                DYData.callback();                
 				//d('dyCancle').show();
 			}
 		},
@@ -43,8 +33,8 @@ define(['ioctrl','dom','minisite'], function(ic, d, m){
 			var str='';
 			switch(statType) {
 				case 0: str='<span>正在处理中...</span>';break;
-				case 1: str='<span>(退订失败)</span><a href="javascript:void(0)" onclick="DYData.doCancleDY();return false;">重试</a>';break;
-				case 2: str='<span>(订阅失败)</span><a href="javascript:void(0)" onclick="DYData.doSubmitDY();return false;">重试</a>';break;
+				case 1: str='<span>(退订失败)</span>';break;
+				case 2: str='<span>(订阅失败)</span>';break;
 				default:;
 			}
 			d('dyStat').setHtml(str);

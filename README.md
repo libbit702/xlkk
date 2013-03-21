@@ -3,7 +3,7 @@
 ## 1. 为什么 ##
 
 <ul>
-	<li>全局变量污染，例如Minisite定义导致的各种冲突，涛哥，松林应该有印象</li>
+	<li>全局变量污染，例如Minisite定义导致的各种冲突</li>
 	<li>代码重用，如果能将这些平时积累起来的JS重用的话会省很多事(每次开发专题都要copy minisite getcookie vip_index)</li>
 </ul>
 
@@ -47,6 +47,10 @@
 
 
 我想重点提到的是RequireJS中[如何定义模块](http://requirejs.org/docs/api.html#define)，这样每个模块的实例化都会在RequireJS的callback中作为一个参数传入，避免了一开始提到的全局变量污染
+
+JS文件压缩方法
+
+node pathto/r.js -o baseUrl=pathtobase paths.jquery=pathtojquery(empty if no need): name=relativepathtobase/srcjsfilename(without extension ".js") out=relativepathtobase/buildjsfilename(full name with ".js")
 
 ## 3. 结束语 ##
 希望将来能够让大家有机会看到这个东东

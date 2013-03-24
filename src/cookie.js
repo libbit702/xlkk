@@ -1,20 +1,18 @@
-/**
- * 通用操作cookie的方法包装
- *
- * @module cookie
- */
 define(function(){
+    /** 
+     * A module representing a cookie.
+     * @exports cookie
+     */
     var Cookie = {
         host : window.location.host
     };
     
     /**
-     * 通过cookie键值取对应的value
-     *
-     * @method getCookie
+     * @description 通过cookie键值取对应的value
+     * @method getcookie
      * @param {String} name
      * @return String or empty string("") if not found
-     */
+     */     
     Cookie.getCookie = function( name ) {
         try{
             var str = (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)")) == null) ? "" : decodeURIComponent( RegExp.$2 );

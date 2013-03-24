@@ -24,7 +24,7 @@
 
 [Node](http://nodejs.org/download/ "NodeJS") 这里主要是为R.js提供基本环境，要配合NodeJS才能进行压缩
 
-[JSDOC](http://http://code.google.com/p/jsdoc-toolkit/ "JSDOC Toolkits") 生成JS文档注释
+[JSDOC](http://code.google.com/p/jsdoc-toolkit/ "JSDOC Toolkits") 生成JS文档注释
 
 ### 目录结构 ###
 

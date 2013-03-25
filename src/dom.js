@@ -6,7 +6,7 @@
 define(function(){
     var core_version = "@VERSION",
         core_trim = core_version.trim,
-        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,    
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,        
     
     Dom = function( id ) {
         return new Dom.prototype.init( id );
@@ -14,11 +14,12 @@ define(function(){
 
     Dom.prototype = {
         constructor: Dom,
-
+ 
         /**
          * 通过document的原生方法id取dom
          *
-         * @method init
+         * @constructor
+         * @alias module:dom
          * @param {String} id
          * @return {Object} dom类的实例
          */
@@ -29,8 +30,10 @@ define(function(){
 
         /**
          * 节点是否有指定的class
-         *
-         * @method hasClass
+         * @alias module:dom#hasClass
+         * @public
+         * @access public
+         * @method module:dom#hasClass
          * @param {String} cls
          * @return {Boolean} true if found or false if not
          */
@@ -41,7 +44,7 @@ define(function(){
         /**
          * 向节点添加指定的class
          *
-         * @method addClass
+         * @method module:dom#addClass
          * @param {String} cls
          * @return {Object} dom object for js chain
          */
@@ -55,7 +58,7 @@ define(function(){
         /**
          * 节点删除指定的class
          *
-         * @method removeClass
+         * @method module:dom#removeClass
          * @param {String} cls
          * @return {Object} dom object for js chain
          */
@@ -70,7 +73,7 @@ define(function(){
         /**
          * 返回原生的DOM节点，为了eventutil的绑定
          *
-         * @method getEle
+         * @method module:dom#getEle
          * @return {Object} document dom object
          */
         getEle : function(){
@@ -80,7 +83,7 @@ define(function(){
         /**
          * 隐藏节点
          *
-         * @method hide
+         * @method module:dom#hide
          * @return {Object} dom object for js chain
          */
         hide: function(){
@@ -91,7 +94,7 @@ define(function(){
         /**
          * 显示节点
          *
-         * @method show
+         * @method module:dom#show
          * @return {Object} dom object for js chain
          */
         show: function(){
@@ -102,7 +105,7 @@ define(function(){
         /**
          * 设置节点的innerHTML
          *
-         * @method setHtml
+         * @method module:dom#setHtml
          * @param  {String} html
          * @return {Object} dom object for js chain
          */
@@ -114,7 +117,7 @@ define(function(){
         /**
          * 获取节点的innerHTML
          *
-         * @method setHtml
+         * @method module:dom#getHtml
          * @return {Object} dom object for js chain
          */
         getHtml: function(){
@@ -124,7 +127,7 @@ define(function(){
         /**
          * 设置节点的样式
          *
-         * @method setHtml
+         * @method module:dom#setStyle
          * @param {String} prop
          * @param {String} value
          * @return {Object} dom object for js chain
@@ -143,7 +146,7 @@ define(function(){
         /**
          * 获取节点在文档中的位置
          *
-         * @method getPos
+         * @method module:dom#getPos
          * @return {Object} dom object for js chain
          */
         getPos: function(){
@@ -159,7 +162,7 @@ define(function(){
         /**
          * 节点在浏览器视图中是否可见
          *
-         * @method isInView
+         * @method module:dom#isInView
          * @return {Object} dom object for js chain
          */
         isInView: function(){
@@ -185,7 +188,7 @@ define(function(){
     /**
      * 对字符进行驼峰式处理
      *
-     * @method toCamelCase
+     * @method module:dom.toCamelCase
      * @access static
      * @return {String} string with camel pattern
      */
@@ -202,7 +205,7 @@ define(function(){
     /**
      * 去除字符左右两边的空白字符
      *
-     * @method trim
+     * @method module:dom.trim
      * @access static
      * @return {String} string without left or right spaces
      */

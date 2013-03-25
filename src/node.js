@@ -52,7 +52,7 @@ define(['fx'], function(FX){
 		/**
 		 * Pause before starting the next animation in the queue (best used in animation chaining)
 		 * @param {Number} seconds How many seconds the node will pause for before starting the next animation
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		pause: function(seconds){
 			var fx = this, seconds = seconds || 1;
@@ -69,7 +69,7 @@ define(['fx'], function(FX){
 		/**
 		 * Generic method to queue custom animations 
 		 * @param {Object} config Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		animate: function(config){
 			return this.queueFx(config, function(){
@@ -88,7 +88,7 @@ define(['fx'], function(FX){
 		 * Highlights the element by changing the background color and then fading back to the original color 
 		 * @param {String} color (optional) The highlight color
 		 * @param {Object} config (optional) Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		highlight: function(color, config){
 			config = config || {};
@@ -107,7 +107,7 @@ define(['fx'], function(FX){
 		/**
 		 * Fade the element in (from transparent to opaque)
 		 * @param {Object} config (optional) Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		fadeIn: function(config){
 			config = config || {};
@@ -126,7 +126,7 @@ define(['fx'], function(FX){
 		/**
 		 * Fade the element out (from opaque to transparent)
 		 * @param {Object} config (optional) Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		fadeOut: function(config){
 			config = config || {};
@@ -147,7 +147,7 @@ define(['fx'], function(FX){
 		 * @param {Number} x The x-axis coordinate (left) to animate the element to
 		 * @param {Number} y The y-axis coordinate (top) to animate the element to
 		 * @param {Object} config (optional) Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		move: function(x, y, config){
 			config = config || {};
@@ -168,7 +168,7 @@ define(['fx'], function(FX){
 		 * @param {Number} width The new width the element will animate to
 		 * @param {Number} height The new height the element will animate to
 		 * @param {Object} config (optional) Configuration for the animation, see above for the complete list of options
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		scale: function(width, height, config){
 			config = config || {};
@@ -187,7 +187,7 @@ define(['fx'], function(FX){
 		 * Queue an animation (private)
 		 * @param {Object} config Configuration for the queue (only queue and priority propertiers apply here)
 		 * @param {Function} fn The function that encapsulates the animation call 
-		 * @return {FX.Node Object} Returns the instance to facilitate method chaining
+		 * @return {Object} Returns the instance to facilitate method chaining
 		 */
 		queueFx: function(config, fn){
 			if(config.queue && config.queue == false || !this.activeFx){
@@ -252,7 +252,7 @@ define(['fx'], function(FX){
 		
 		/**
 		 * Remove the next item in the queue and return it
-		 * @return {Object/Null} Returns the next item in the queue or null if none is found
+		 * @return {Object|Null} Returns the next item in the queue or null if none is found
 		 */
 		dequeue: function(){
 			var item = this.items.shift();

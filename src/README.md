@@ -1,18 +1,18 @@
 # 迅雷看看前端开发JS库模块开发 #
 
-## Comment Shuoshuo ##
+## Comment Shuoshuo ## -- done
 专题评论使用说说数据
 
-## Cookie ##
+## Cookie ## -- done
 通用cookie类，存取cookie值，设置document的domain
 
-## Dom ##
+## Dom ## -- done
 仿jQuery的简单dom操作类，及一些简单的包装
 
-## DomReady ##
+## DomReady ## -- ignore
 RequireJS官方插件，类似jQuery的ready方法
 
-## DY ##
+## DY ## -- done
 针对看看电影剧集等的独立订阅类，只包装了最简单的方法
 
 ## EventUtil ##
@@ -21,19 +21,19 @@ RequireJS官方插件，类似jQuery的ready方法
 ## FocusPic ##
 看看首页轮播图效果
 
-## FX及Node ##
+## FX及Node ## -- ignore
 独立的动画插件
 
 ## HashTable ##
 使用Object包装的类，曾用于看看通用PV
 
-## ie6png ##
+## ie6png ## -- ignore
 png图片在IE6下显示兼容工具
 
 ## ioctrl ##
 Web插件DAPCTRL及sCookie的包装类
 
-## json ##
+## json ## -- ignore
 json编码解码的独立类
 
 ## keyevent ##
@@ -60,7 +60,7 @@ web嵌入swf文件的浏览器兼容工具
 ## switchtab ##
 标签切换，例如首页右侧热播区域
 
-## transitions ##
+## transitions ## -- ignore
 FX提供的额外渐变效果
 
 ## turn ##

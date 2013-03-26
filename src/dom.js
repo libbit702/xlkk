@@ -6,6 +6,7 @@
  * @version 1.0
  */
 define(function(){
+    "use strict";
     var core_version = "@VERSION",
         core_trim = core_version.trim,
         rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,        
@@ -133,7 +134,7 @@ define(function(){
          * @return {Object} dom object for js chain
          */
         setStyle: function (prop, value){
-            if(prop == 'opacity'){
+            if(prop === 'opacity'){
                 this.node.style.filter = "alpha(opacity=" + value * 100 + ")";
                 this.node.style.opacity = value;
             }else{
@@ -170,11 +171,12 @@ define(function(){
             t2=t1 + document.documentElement.clientHeight,
             l1=document.documentElement.scrollLeft,
             l2=l1 + document.documentElement.clientWidth,
-            o=this.node;
+            o=this.node,
+            p={};
 
             if(o){
                 p=this.getPos();
-                if((p.t>=t1||p.t+o.clientHeight>=t1)&&p.t<=t2&&(p.l>=l1||p.l+obj.clientWidth>=l1)&&p.l<=l2){
+                if((p.t>=t1||p.t+o.clientHeight>=t1)&&p.t<=t2&&(p.l>=l1||p.l+o.clientWidth>=l1)&&p.l<=l2){
                     return true;
                 }else{
                     return false;
@@ -192,9 +194,9 @@ define(function(){
      * @return {String} string with camel pattern
      */
     Dom.toCamelCase = function(str){            
-        var parts = str.split('-'), camel = parts[0], len = parts.length;
+        var parts = str.split('-'), camel = parts[0], len = parts.length, i;
         if(len > 1){
-            for(var i=1; i < len; i++){
+            for(i=1; i < len; i++){
                 camel += parts[i].charAt(0).toUpperCase() + parts[i].substring(1);
             }
         }
@@ -209,13 +211,13 @@ define(function(){
      */
     Dom.trim = function(text){
         if(core_trim && !core_trim.call("\uFEFF\xA0")){
-            return text == null ? "" : core_trim.call( text );
+            return text === null ? "" : core_trim.call( text );
         } else {
-            return text == null ? "" : ( text + "" ).replace( rtrim, "" );
+            return text === null ? "" : ( text + "" ).replace(rtrim, "");
         }
     };
 
     Dom.prototype.init.prototype = Dom.prototype;
 
     return Dom;
-})
+});

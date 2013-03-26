@@ -1,4 +1,5 @@
 define(function(){
+    "use strict";
     /** 
      cookie操作集合对象
      @exports cookie
@@ -8,14 +9,15 @@ define(function(){
     var Cookie = {
         host : window.location.host,
         /**
-          * @description 通过cookie键值取对应的value
+          * 通过键值取值
+          *
           * @method module:cookie#getcookie
           * @param {String} name
           * @return {String} the cookie value or empty string if not found
           */  
         getCookie : function( name ) {
             try{
-                var str = (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)")) == null) ? "" : decodeURIComponent( RegExp.$2 );
+                var str = (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)")) === null) ? "" : decodeURIComponent( RegExp.$2 );
                 if (str !== "") {
                     return str;
                 } else {
@@ -27,7 +29,7 @@ define(function(){
         },
         
         /**
-         * 设置当前url域下的cookie值，并设置超时时间
+         * 设置当前url域下的cookie值,并设置超时时间
          *
          * @method module:cookie#setCookie
          * @param {String} name

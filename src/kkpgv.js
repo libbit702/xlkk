@@ -1,3 +1,10 @@
+/**
+ * 发包函数封装
+ *
+ * @module kkpgv
+ * @author lijunjun
+ * @version 1.0
+ */
 define(function(){
     var kkpgv ={
         sendkkpv:function (e){

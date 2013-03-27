@@ -1,7 +1,19 @@
+/**
+ * jsonp封装
+ *
+ * @module minisite
+ * @author lijunjun
+ * @version 1.0
+ */
 define(function(){
     'use strict';
     var MiniSite = {};
-    //Check User Browser type by UA
+
+    /**
+     * 根据UserAgent检测浏览器类型
+     *
+     * @method module:minisite.Browser
+     */
     MiniSite.Browser = {
         ie: /msie/.test(window.navigator.userAgent.toLowerCase()),
         moz: /gecko/.test(window.navigator.userAgent.toLowerCase()),
@@ -9,7 +21,14 @@ define(function(){
         safari: /safari/.test(window.navigator.userAgent.toLowerCase())
     };
 
-    //Simple JSONP Implementation
+    /**
+     * JSONP跨域取数据方法
+     *
+     * @method module:minisite.loadJSData
+     * @param {String} sUrl
+     * @param {String} sCharset
+     * @param {Function} fCallback
+     */
     MiniSite.loadJSData = function( sUrl, sCharset, fCallback ){
         var _script = document.createElement('script');
         _script.setAttribute('charset', sCharset);

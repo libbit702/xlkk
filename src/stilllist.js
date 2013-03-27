@@ -1,3 +1,12 @@
+/**
+ * 小图固定不变的轮播图
+ *
+ * @module stillList
+ * @author lijunjun 
+ * @version 1.0
+ * @example
+   参看<a href="http://topics.kankan.com/nsj/" target="_blank">实例</a>
+ */
 define(function(){
 	var stillList = {
 		config:{

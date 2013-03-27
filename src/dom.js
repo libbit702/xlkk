@@ -138,7 +138,7 @@ define(function(){
                 this.node.style.filter = "alpha(opacity=" + value * 100 + ")";
                 this.node.style.opacity = value;
             }else{
-                prop = this.toCamelCase(prop);
+                prop = Dom.toCamelCase(prop);
                 this.node.style[prop] = value;
             }
             return this;

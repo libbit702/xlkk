@@ -261,13 +261,15 @@ define(function(){
 	     */
         getPeerID: function(bit){
             var peerId = null;
-            try{
-                if(32 === bit){
-                    peerId = this.dapctrl.Get("sPeerID32")||null;
-                }else{
-                    peerId = this.dapctrl.Get("sPeerID")||null;
-                }
-            }catch(e){}
+            if(this.dapctrl){
+	            try{
+	                if(32 === bit){
+	                    peerId = this.dapctrl.Get("sPeerID32")||null;
+	                }else{
+	                    peerId = this.dapctrl.Get("sPeerID")||null;
+	                }
+	            }catch(e){}
+        	}
             return peerId;
         }
 	};

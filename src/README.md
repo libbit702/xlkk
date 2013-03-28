@@ -51,23 +51,23 @@ jsonp的简单实现
 ## stilllist ## | done
 可视区域固定不变的轮播图效果
 
-## storage ##
+## storage ## | done
 基于YUI的storage浏览器兼容工具
 
 ## swfobject ## | ignore
 web嵌入swf文件的浏览器兼容工具
 
-## switchtab ##
+## switchtab ## | done
 标签切换，例如首页右侧热播区域
 
 ## transitions ## | ignore
 FX提供的额外渐变效果
 
-## turn ##
+## turn ## | done
 可视区域左右移动进行切换的轮播图效果
 
-## vip ##
+## vip ## | done
 付费频道用户类型判断
 
-## vote ##
+## vote ## | done
 普通专题投票组数据展示初始化及投票动作绑定（基于jQuery）

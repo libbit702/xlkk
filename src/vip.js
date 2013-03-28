@@ -1,3 +1,10 @@
+/**
+ * 付费频道用户信息处理
+ *
+ * @module vip
+ * @author lijunjun
+ * @version 1.0
+ */
 define([], function(c){
     'use strict';
     var Vip = {
@@ -7,6 +14,10 @@ define([], function(c){
 
     /**
      * 仅限于使用付费频道头的页面使用，传入参数G_XLKKUSERINFO只有在付费页面才会生成
+     * 
+     * @method module:vip#getBerylType
+     * @param {Object} userinfo
+     * @return {Num} 付费用户的类型
      */
     Vip.getBerylType = function(userinfo) {
         var shop_user_info = userinfo.shopInfo,
@@ -26,6 +37,11 @@ define([], function(c){
         return this.berylType;
     };
 
+    /**
+     * 用户登出后清理
+     * 
+     * @method module:vip#loginout
+     */
     Vip.loginout = function() {
        this.berylType = 0;
        this.products = null;

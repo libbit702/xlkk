@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: focuspic</title>
+    <title>JSDoc: Module: turn</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Module: focuspic</h1>
+    <h1 class="page-title">Module: turn</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    focuspic
+    turn
     </h2>
     
 </header>  
@@ -38,7 +38,7 @@
     
     
         
-            <div class="description">类门户首页及付费首页的轮播图效果</div>
+            <div class="description">类付费首页新片首播轮播图效果</div>
         
         
         
@@ -74,7 +74,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 3
+        <a href="turn.js.html">turn.js</a>, line 1
     </li></ul></dd>
     
     
@@ -89,8 +89,23 @@
         
             <h3>Example</h3>
             
-    <pre class="prettyprint"><code>     var f1 = new FocusPic;   
-     f1.init(3000, 5,'focus_box_','focus_sbox_');</code></pre>
+    <pre class="prettyprint"><code> 
+ 	var t = new Turn();
+    t.init({ 
+    	current:0,//当前位置
+    	allpage:3, //轮播图总数
+    	step:484,//像素位移数
+    	prev:'bt_movierecom_pre',//点击左箭头ID
+    	next:'bt_movierecom_next',//点击右箭头ID
+    	div:'div_movierecom',//轮播图父节点ID
+    	clickflag:0, //轮播是否正在移动中，默认为0
+    	offClsLeft:'off', //左箭头不可点击时添加class
+    	offClsRight:'off',//右箭头不可点击时添加class
+    	auto:true,//是否自动轮播
+    	divSibling:'div_movierecom_1',//和自动轮播有关，复制轮播图节点内容的兄弟节点ID
+    	time:3000,//自动轮播间隔
+        speed:0.3//移动动画经历的时间
+    });</code></pre>
 
         
     
@@ -114,7 +129,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">(interval, num, bid, sid)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="auto"><span class="type-signature"></span>auto<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -122,7 +137,72 @@
     
     
     <div class="description">
-        初始化轮播配置
+        轮播图自动向后滚动
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="turn.js.html">turn.js</a>, line 107
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="go"><span class="type-signature"></span>go<span class="signature">(index)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        轮播图移动到指定的图片位置
     </div>
     
 
@@ -156,7 +236,7 @@
 	
         <tr>
             
-                <td class="name"><code>interval</code></td>
+                <td class="name"><code>index</code></td>
             
             
             <td class="type">
@@ -172,76 +252,7 @@
             
             
             
-            <td class="description last">自动轮播间隔</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>num</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Num</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">轮播图总数</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>bid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">轮播图中大图的ID前缀</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>sid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">轮播图中小图的ID前缀</td>
+            <td class="description last"></td>
         </tr>
 	
 	
@@ -272,7 +283,120 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 22
+        <a href="turn.js.html">turn.js</a>, line 126
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        初始化轮播图配置
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="turn.js.html">turn.js</a>, line 33
     </li></ul></dd>
     
     
@@ -304,7 +428,7 @@
     
     
     <div class="description">
-        轮播切换至上一张图片
+        轮播图向后滚动
     </div>
     
 
@@ -337,7 +461,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 108
+        <a href="turn.js.html">turn.js</a>, line 90
     </li></ul></dd>
     
     
@@ -361,7 +485,7 @@
         
             
 <dt>
-    <h4 class="name" id="onone"><span class="type-signature"></span>onone<span class="signature">(num)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="pre"><span class="type-signature"></span>pre<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -369,7 +493,7 @@
     
     
     <div class="description">
-        指定显示轮播图中某个图片的动作
+        轮播图向前滚动
     </div>
     
 
@@ -377,54 +501,6 @@
     
     
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>num</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Num</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">指定显示的图片在轮播图中的顺序，从0开始</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
     
     
     
@@ -450,7 +526,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 64
+        <a href="turn.js.html">turn.js</a>, line 73
     </li></ul></dd>
     
     
@@ -474,7 +550,7 @@
         
             
 <dt>
-    <h4 class="name" id="pause"><span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -482,7 +558,7 @@
     
     
     <div class="description">
-        暂停自动轮播
+        轮播图停止移动
     </div>
     
 
@@ -515,137 +591,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 99
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="play"><span class="type-signature"></span>play<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        开始自动轮播
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 86
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="prev"><span class="type-signature"></span>prev<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        轮播切换至下一张图片
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="focuspic.js.html">focuspic.js</a>, line 117
+        <a href="turn.js.html">turn.js</a>, line 117
     </li></ul></dd>
     
     

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: eventutil.js</title>
+    <title>JSDoc: Source: switchtab.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: eventutil.js</h1>
+    <h1 class="page-title">Source: switchtab.js</h1>
     
     
 
@@ -25,54 +25,69 @@
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>define(function(){
-    "use strict";
-    /** 
-     事件绑定的浏览器兼容
-     @exports eventutil
-     @author lijunjun
-     @version 1.0
-     */
-    var EventUtil = {};
-    /**
-      * 注册事件
-      *
-      * @method module:eventutil.addEventHandler
-      * @param {DOMObject} oTarget 事件绑定对象
-      * @param {String} sEventType 事件绑定类型
-      * @param {Function} fnHandler 触发事件后运行的函数
-      */
-    EventUtil.addEventHandler = function( oTarget, sEventType, fnHandler ) {
-        if ( oTarget.addEventListener ) {
-            oTarget.addEventListener( sEventType, fnHandler, false );
-        } else if ( oTarget.attachEvent ) {
-            oTarget.attachEvent( "on" + sEventType, fnHandler );
-        } else {
-            oTarget["on" + sEventType] = fnHandler;
-        }
-    };
-    
-    /**
-      * 删除事件
-      *
-      * @method module:eventutil.addEventHandler
-      * @param {DOMObject} oTarget 事件绑定对象
-      * @param {String} sEventType 事件绑定类型
-      * @param {Function} fnHandler 触发事件后运行的函数
-      */  
-    EventUtil.removeEventHandler = function( oTarget, sEventType, fnHandler ) {
-        if ( oTarget.removeEventListener ) {
-            oTarget.removeEventListener( sEventType, fnHandler, false );
-        } else if ( oTarget.detachEvent ) {
-            oTarget.detachEvent( "on" + sEventType, fnHandler );
-        } else { 
-            oTarget["on" + sEventType] = null;
-        }
-    };
-    return EventUtil;
+            <pre class="prettyprint source"><code>/**
+ * 类首页右侧排行榜的Tab切换
+ *
+ * @module switchtab
+ * @author lijunjun
+ * @version 1.0
+ * @example
+s1 = new s;
+s1.init({
+    identifyTab:'Tab_rebo_',//标签ID的前缀
+    identifyList:'List_rebo_',//内容ID的前缀
+    count:5,
+    cnon:'on'
 });
+ */
+define(['dom','eventutil'], function(d,e){
+	function SwitchTab(){
+		this.config = {}; 
+		this.tabs = [];
+		this.lists = [];
+	};
 
-</code></pre>
+	SwitchTab.prototype = {
+		/**
+         * tab配置初始化
+         *
+         * @method module:switchtab#init
+         * @param {Object} config
+         */
+		init : function(config) {
+			for(conf in config){
+				this.config[conf] = config[conf];
+			}
+			var _self = this;
+			for(var i=0;i&lt;this.config.count;i++) {
+				this.tabs[i] = d(this.config.identifyTab+i);
+				this.lists[i] = d(this.config.identifyList+i);	
+				(function(i){
+		            e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.show(i)}); 
+		        })(i)	
+			}		
+		},
+
+		/**
+         * tab切换初始化
+         *
+         * @method module:switchtab#show
+         * @param {Num} index 显示指定的tab
+         */
+		show : function(index){
+			for(var i=0;i&lt;this.config.count;i++) {
+				if (i != index) {
+					this.tabs[i].removeClass(this.config.cnon);
+					this.lists[i].hide() ;
+				}
+			}
+			this.tabs[index].addClass(this.config.cnon);
+			this.lists[index].show();
+		}
+	};
+
+	return SwitchTab;
+})</code></pre>
         </article>
     </section>
 

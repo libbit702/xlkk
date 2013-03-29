@@ -7,7 +7,12 @@ define(function(){
      @version 1.0
      @example
      var h = new Hashtable;   
-     h.add(key, value);
+     h.add('key', value);
+     h.remove('key');
+     h.get('key');
+     h.clear();
+     h.contains('key');
+     h.size();
      */
     function Hashtable() {
 

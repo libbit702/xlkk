@@ -4,6 +4,8 @@
  * @module minisite
  * @author lijunjun
  * @version 1.0
+ * @example
+    这要不会用就去死吧
  */
 define(function(){
     'use strict';

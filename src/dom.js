@@ -4,6 +4,11 @@
  * @module dom
  * @author lijunjun
  * @version 1.0
+ * @example
+    d('id_of_dom').hasClass('cls');
+    d('id_of_dom').addClass('cls').hide().setHtml('inner html content');
+    var trimed_str = d.trim('string to be trimed');
+    var strCamelExample = d.toCamelCase('str-camel-example');
  */
 define(function(){
     "use strict";

@@ -5,6 +5,10 @@ define(function(){
      @exports eventutil
      @author lijunjun
      @version 1.0
+     @example 
+     e.addEventHandler(d('id_of_dom').getEle(), 'click', function(){
+        //do sth here
+     });
      */
     var EventUtil = {};
     /**

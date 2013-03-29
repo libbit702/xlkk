@@ -10,6 +10,9 @@
 	 * @requires ioctrl 核心模块，PeerID支持
 	 * @requires dom 可选，用来控制订阅相关功能按钮显示隐藏
 	 * @requires minisite 核心模块 提供jsonp功能
+     * @example 
+     dy.init();
+     onclick="doSubmitDY();"
 	 */
 	var DYData = {
 		/*-------------------- 订阅数据来源接口 -------------------------*/

@@ -5,6 +5,10 @@ define(function(){
      @exports cookie
      @author lijunjun
      @version 1.0
+     @example
+     ck.getCookie('key');
+     ck.setCookie('key','value', 24);
+     c.setDomain('kankan.com');
      */
     var Cookie = {
         host : window.location.host,

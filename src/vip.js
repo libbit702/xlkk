@@ -4,8 +4,10 @@
  * @module vip
  * @author lijunjun
  * @version 1.0
+ * @example
+ vip.getBerylType(G_XLKANKANUSERINFO);
  */
-define([], function(c){
+define(function(c){
     'use strict';
     var Vip = {
         berylType: 0,

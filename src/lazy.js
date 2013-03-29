@@ -4,6 +4,9 @@
  * @module lazy
  * @author lijunjun
  * @version 1.0
+ * @example
+     lazy.init();
+     lazy.run();
  */
 define(['eventutil'], function(e){
 	"use strict";

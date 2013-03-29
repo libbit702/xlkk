@@ -4,6 +4,12 @@
  *
  * @module storage
  * @see https://github.com/rgrove/storage-lite
+ * @example 
+ storage.clear();
+ storage.length();
+ storage.getItem('key');
+ storage.removeItem('key');
+ storage.setItem('key', 'value');
  */
 define(['domReady','json'], function(domReady, JSON){
     var w             = window,

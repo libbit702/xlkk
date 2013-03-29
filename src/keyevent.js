@@ -4,6 +4,14 @@
  * @module keyevent 
  * @author lijunjun
  * @version 1.0
+ * @example
+     ke.down('delete', function(){
+        //do sth here
+     });
+     
+     ke.up('esc', function(){
+        //do sth here
+     });
  */
 define(['eventutil'], function(e){
     "use strict";

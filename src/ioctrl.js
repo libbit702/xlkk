@@ -4,6 +4,8 @@
  * @module ioCtrl
  * @author lijunjun
  * @version 1.0
+ *@example
+     i.getPeerID();
  */
 define(function(){  
 	/* 浏览器判断 */  

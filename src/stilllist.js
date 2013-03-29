@@ -5,6 +5,10 @@
  * @author lijunjun 
  * @version 1.0
  * @example
+    s.init({pgCount:8, pgInterval:3000});
+    s.jump(idx_of_img);
+    s.jump('prev');
+    s.jump('next');
    参看<a href="http://topics.kankan.com/nsj/" target="_blank">实例</a>
  */
 define(function(){

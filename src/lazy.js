@@ -44,7 +44,10 @@ define(['eventutil'], function(e){
 					wh=position(img);
 					if( (wh.Top>=min.Top && wh.Top<=max.Top && wh.Left>=min.Left && wh.Left<=max.Left) || ((wh.Top+height)>=min.Top && wh.Top<=max.Top && (wh.Left+width)>=min.Left && wh.Left<=max.Left)){
 						(function(imgobj,realsrc){
-							setTimeout(function() {imgobj.src = realsrc ;}, 100) ;
+							setTimeout(function() {
+								imgobj.src = realsrc;
+								imgobj.removeAttribute('_src');
+							}, 100) ;
 						})(img,_img.src) ;
 						delete imgs[i];
 					}

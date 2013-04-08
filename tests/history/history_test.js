@@ -3,13 +3,14 @@ require.config({
     urlArgs: "rd="+Math.random()    
 });
 
-require(["jquery", "history"], function($, history) {
+require(["jquery", "history"], function($) {
+   
     $(function() {
         // looking for all the links and hang on the event, all references in this document
         $("a").click(function(){
+            
             // keep the link in the browser history
             history.pushState( null, null, this.href );
-
 
             // here can cause data loading, etc.
             $('#link_show').html(this.href);

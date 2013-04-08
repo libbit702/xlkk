@@ -10,7 +10,9 @@ s1.init({
     identifyTab:'Tab_rebo_',//标签ID的前缀
     identifyList:'List_rebo_',//内容ID的前缀
     count:5,
-    cnon:'on'
+    cnon:'on',
+    auto:true|false,//boolean,是否轮播
+    interval:5000,//轮播时间间隔
 });
  */
 define(['dom','eventutil'], function(d,e){
@@ -18,6 +20,8 @@ define(['dom','eventutil'], function(d,e){
 		this.config = {}; 
 		this.tabs = [];
 		this.lists = [];
+		this.timer = 0;
+		this.idx = 0;
 	};
 
 	SwitchTab.prototype = {
@@ -36,9 +40,52 @@ define(['dom','eventutil'], function(d,e){
 				this.tabs[i] = d(this.config.identifyTab+i);
 				this.lists[i] = d(this.config.identifyList+i);	
 				(function(i){
-		            e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.show(i)}); 
+		            e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.show(i)});
+		            if(_self.config.auto === true){
+		            	e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.pause();}); 
+		            	e.addEventHandler(_self.lists[i].getEle(), 'mouseover', function(){_self.pause();});
+			            e.addEventHandler(_self.tabs[i].getEle(), 'mouseout', function(){_self.auto();}); 
+			            e.addEventHandler(_self.lists[i].getEle(), 'mouseout', function(){_self.auto();}); 
+		        	}
 		        })(i)	
-			}		
+			}	
+			if(this.config.auto === true) {
+				this.auto();
+			}
+		},
+
+		/**
+         * 自动轮播
+         *
+         * @method module:switchtab#auto
+         */
+		auto:function(){
+			var _self = this;
+			this.timer = setInterval(function(){
+				_self.next();
+			}, this.config.interval);
+		},
+
+		/**
+         * 展示下一个tab及list
+         *
+         * @method module:switchtab#next
+         */
+		next:function(){
+			this.idx = this.idx + 1;
+			if(this.idx >= this.config.count){
+				this.idx = 0;
+			}
+			this.show(this.idx);
+		},
+
+		/**
+         * 暂停轮播
+         *
+         * @method module:switchtab#pause
+         */
+		pause:function(){
+			clearInterval(this.timer);
 		},
 
 		/**

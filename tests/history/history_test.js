@@ -13,7 +13,7 @@ require(["jquery", "history"], function($) {
             history.pushState( null, null, this.href );
 
             // here can cause data loading, etc.
-            $('#link_show').html(this.href);
+            $('#link_show').html(this.href+'<script>jQuery(function($){console.log(history);})</script>');
 
             // do not give a default action
             return false;

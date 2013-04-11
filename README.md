@@ -57,5 +57,6 @@ JS文件压缩命令行调用方式(http://requirejs.org/docs/optimization.html#
 
 node pathto/r.js -o baseUrl=pathtobase paths.jquery=pathtojquery(empty if no need): name=relativepathtobase/srcjsfilename(without extension ".js") out=relativepathtobase/buildjsfilename(full name with ".js")
 
-## 3. 结束语 ##
-希望将来能够让大家有机会看到这个东东
+## 3. 应用示例 ##
+1. [迅雷影院](http://yy.xunlei.com/ "迅雷影院")
+2. [女人公敌](http://vip.kankan.com/topics/nrgd/ "女人公敌")

@@ -138,22 +138,35 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
 			if(index>=this.config.allpage){
 				go = -(this.config.allpage * this.config.step);
 			}else if(index<0){
-				d(this.config.div).setStyle('margin-left', -(this.config.allpage * this.config.step)+'px');
+                if(this.config.valign === true){
+                    d(this.config.div).setStyle('top', -(this.config.allpage * this.config.step)+'px');
+                }else{
+                    d(this.config.div).setStyle('margin-left', -(this.config.allpage * this.config.step)+'px');
+                }
 				go = -((this.config.allpage-1) * this.config.step);
 			}else{
 				go = -(index * this.config.step);
 			}
 			//FX的animate方法调整marginleft
-			var _self = this;
+			var _self = this, move_attributes;
+            if(this.config.valign === true){
+                move_attributes = {'top':{to:go}};
+            }else{
+                move_attributes = {'marginLeft':{to:go}};
+            }
 			this.node.animate({
 	            duration:this.config.speed,
-				attributes:{'marginLeft':{to:go}},
+				attributes:move_attributes,
 				callback:function(){
 					_self.config.clickflag = 0;
 					if(index>=_self.config.allpage){
 						_self.config.current = 0;
 						setTimeout(function(){
-							d(_self.config.div).setStyle('margin-left', '0px');	
+                            if(_self.config.valign === true){
+                                d(_self.config.div).setStyle('top', '0px');	
+                            }else{
+                                d(_self.config.div).setStyle('margin-left', '0px');	
+                            }
 						});
 					}else if(index<0){
 						_self.config.current = _self.config.allpage-1;

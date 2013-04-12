@@ -42,7 +42,11 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
 			}
 			this.node = new FX.Node(config.div);
 			if(this.config.auto === true){
-				d(this.config.divSibling).setHtml(d(this.config.div).getHtml());
+                if(this.config.valign === true){
+                    d(this.config.div).setHtml(d(this.config.div).getHtml()+d(this.config.div).getHtml());
+                }else{
+                    d(this.config.divSibling).setHtml(d(this.config.div).getHtml());
+                }
 			}
 
 			var _self = this;
@@ -111,7 +115,7 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
          */
 		auto: function(){
 			var _self = this;
-			this.interval = setInterval(function(){_self.pre();}, this.config.time);
+			this.interval = setInterval(function(){_self.next();}, this.config.time);
 		},
 
 		/**

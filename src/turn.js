@@ -18,11 +18,12 @@
     	offClsRight:'off',//右箭头不可点击时添加class
     	auto:true,//是否自动轮播
     	divSibling:'div_movierecom_1',//和自动轮播有关，复制轮播图节点内容的兄弟节点ID
-    	time:3000,//自动轮播间隔
+    	time:3000,//自动轮播间隔,
+    	nav:'nav_',
         speed:0.3//移动动画经历的时间
     });
  */
-define(['dom', 'eventutil','node'],function(d,e,FX){
+define(['dom', 'eventutil','node'],function(d,e,FX, undefined){
 	function Turn(){
 		this.config = {},
 		this.node = {},
@@ -40,37 +41,55 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
 			for(conf in config){
 				this.config[conf] = config[conf];
 			}
+
 			this.node = new FX.Node(config.div);
+
 			if(this.config.auto === true){
                 if(this.config.valign === true){
                     d(this.config.div).setHtml(d(this.config.div).getHtml()+d(this.config.div).getHtml());
                 }else{
                     d(this.config.divSibling).setHtml(d(this.config.div).getHtml());
                 }
+                this.auto();
 			}
 
 			var _self = this;
+			if(this.config.prev !== undefined){
+				e.addEventHandler(d(config.prev).getEle(), 'click', function(){
+					_self.pre();
+				});
+				if(this.config.auto === true){
+					e.addEventHandler(d(config.prev).getEle(), 'mouseover', function(){
+						_self.stop();
+					});
+					e.addEventHandler(d(config.prev).getEle(), 'mouseout', function(){
+						_self.auto();
+					});
+				}
+			}
 
-			e.addEventHandler(d(config.prev).getEle(), 'click', function(){
-				_self.pre();
-			});
-			e.addEventHandler(d(config.next).getEle(), 'click',  function(){
-				_self.next();
-			});
-			if(this.config.auto === true){
-				e.addEventHandler(d(config.prev).getEle(), 'mouseover', function(){
-					_self.stop();
+			if(this.config.next !== undefined){
+				e.addEventHandler(d(config.next).getEle(), 'click',  function(){
+					_self.next();
 				});
-				e.addEventHandler(d(config.next).getEle(), 'mouseover', function(){
-					_self.stop();
-				});
-				e.addEventHandler(d(config.prev).getEle(), 'mouseout', function(){
-					_self.auto();
-				});
-				e.addEventHandler(d(config.next).getEle(), 'mouseout', function(){
-					_self.auto();
-				});
-				this.auto();
+				if(this.config.auto === true){
+					e.addEventHandler(d(config.next).getEle(), 'mouseover', function(){
+						_self.stop();
+					});
+					e.addEventHandler(d(config.next).getEle(), 'mouseout', function(){
+						_self.auto();
+					});
+				}
+			}
+
+			if(this.config.nav !== undefined){
+				for(var i=0;i<this.config.allpage;i++){
+					(function(i){
+						e.addEventHandler(d(_self.config.nav+i).getEle(), 'click',  function(){
+							_self.go(i);
+						});
+					})(i);
+				}				
 			}
 		},
 
@@ -177,6 +196,16 @@ define(['dom', 'eventutil','node'],function(d,e,FX){
 
 					}else{
 						_self.config.current = index;
+					}
+					
+					if(_self.config.nav !== undefined){
+						for(var i=0;i < _self.config.allpage;i++){
+							if(_self.config.current === i){
+								d(_self.config.nav+i).addClass('on');
+							}else{
+								d(_self.config.nav+i).removeClass('on');
+							}
+						}						
 					}
 				}
 			});

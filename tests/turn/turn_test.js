@@ -15,9 +15,10 @@ require(["turn"], function(Turn) {
     	clickflag:0, 
     	offClsLeft:'off', 
     	offClsRight:'off',
-    	auto:true,
+    	auto:false,
     	divSibling:'div_movierecom_1',
     	time:3000,
+        nav:'nav_prefix_',
         speed:0.3
     });
 });

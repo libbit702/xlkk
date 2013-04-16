@@ -10,7 +10,9 @@ require(["switchtab"], function(s) {
         identifyTab:'Tab_rebo_',
         identifyList:'List_rebo_',
         count:5,
-        cnon:'on'
+        cnon:'on',
+        auto:true,
+        interval:3000
     });
 
     s2 = new s;

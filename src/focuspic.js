@@ -16,7 +16,8 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
 		this.sid = "";
 		this.totalcount = 0;
 		this.fxNodes = [];
-		this.interval = 5000
+		this.interval = 5000;
+        this.cnon = 'on';
 	}
 	FocusPic.prototype = {		
 		/**
@@ -28,37 +29,48 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
 	      * @param {String} bid 轮播图中大图的ID前缀
 	      * @param {String} sid 轮播图中小图的ID前缀
 	      */
-	    init:function(interval,num,bid,sid){
-			this.bid = bid,
-			this.sid = sid,
-			this.totalcount = num,
-			this.interval = interval
+	    init:function(interval,num,bid,sid,cnon){
+			this.bid = bid;
+			this.sid = sid;
+			this.totalcount = num;
+			this.interval = interval;
+            if(typeof cnon !== 'undefined'){
+                this.cnon = cnon;
+            }
 			var _self = this;
 			
 			for(var i=0;i<num;i++){
 				(function(i){
 					e.addEventHandler(d(sid+i).getEle(),'mouseover', function(){
-						_self.pause();
+                        if(_self.interval > 0){
+                            _self.pause();
+                        }
 						_self.onone(i, 10);
 					});
 
 					e.addEventHandler(d(sid+i).getEle(),'mouseout',function(){
-						_self.play();
+                        if(_self.interval > 0){
+                            _self.play();
+                        }
 						_self.onone(i, 10);
 					});
+                    
+                    if(_self.interval > 0){
+                        e.addEventHandler(d(bid+i).getEle(),'mouseover',function(){
+                            _self.pause()
+                        });
 
-					e.addEventHandler(d(bid+i).getEle(),'mouseover',function(){
-						_self.pause()
-					});
-
-					e.addEventHandler(d(bid+i).getEle(),'mouseout',function(){
-						_self.play()
-					});
+                        e.addEventHandler(d(bid+i).getEle(),'mouseout',function(){
+                            _self.play()
+                        });
+                    }
 				})(i);
 				this.fxNodes[i] = new FX.Node(this.bid+i);
 			}
-
-			this.play();
+            
+            if(this.interval > 0){
+                this.play();
+            }
 		},
 
 		/**
@@ -69,8 +81,8 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
 	      */
 		onone:function(num){
 			if(num==this.page)return;
-			d(this.sid+this.page).removeClass('on');
-			d(this.sid+num).addClass('on');
+			d(this.sid+this.page).removeClass(this.cnon);
+			d(this.sid+num).addClass(this.cnon);
 			for(var i=0;i<this.fxNodes.length;i++){
 				this.fxNodes[i].stop();
 			}

@@ -45,14 +45,14 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
                         if(_self.interval > 0){
                             _self.pause();
                         }
-						_self.onone(i, 10);
+						_self.onone(i);
 					});
 
 					e.addEventHandler(d(sid+i).getEle(),'mouseout',function(){
                         if(_self.interval > 0){
                             _self.play();
                         }
-						_self.onone(i, 10);
+						_self.onone(i);
 					});
                     
                     if(_self.interval > 0){
@@ -80,9 +80,10 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
 	      * @param {Num} num 指定显示的图片在轮播图中的顺序，从0开始
 	      */
 		onone:function(num){
-			if(num==this.page)return;
-			d(this.sid+this.page).removeClass(this.cnon);
+			if(num==this.page)return;			
+            d(this.sid+this.page).removeClass(this.cnon);
 			d(this.sid+num).addClass(this.cnon);
+            
 			for(var i=0;i<this.fxNodes.length;i++){
 				this.fxNodes[i].stop();
 			}
@@ -92,6 +93,7 @@ define(['eventutil', 'node', 'dom'], function(e, FX, d){
 			this.fxNodes[num].fadeIn({
 				callback:(function(){this.style.display='block'}).call(this.fxNodes[num].el)
 			});			
+            
 			this.page=num;
 		},
 

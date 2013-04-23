@@ -21,13 +21,11 @@ requirejs.config({
     }
 });
 
-require(['backbone','jquery','underscore'], function(Backbone, $, _){
-	
-
+require(['backbone','jquery','underscore'], function(Backbone, $, _){	
 	var Item = Backbone.Model.extend({
 	    defaults: {
-	      part1: 'hello',
-	      part2: 'world'
+	      idx: 0,
+	      val: ''
 	    }
 	  });
 
@@ -57,8 +55,8 @@ require(['backbone','jquery','underscore'], function(Backbone, $, _){
 	    },
 	    swap: function(){
 	      var swapped = {
-	        part1: this.model.get('part2'), 
-	        part2: this.model.get('part1')
+	        idx: this.model.get('val'), 
+	        val: this.model.get('idx')
 	      };
 	      this.model.set(swapped);
 	    },
@@ -79,12 +77,23 @@ require(['backbone','jquery','underscore'], function(Backbone, $, _){
 	      this.collection.bind('add', this.appendItem); // collection event binder
 
 	      this.counter = 0;
-	      this.render();      
+	      this.render();
+	      var self = this,addItem;
+	      require(['http://vip.kankan.com/js/search_content_utf8_vip.js?callback=define'], function(data){
+		  	_(searchTextArr).each(function(item, key){	
+		  		addItem = new Item();
+		        addItem.set({
+		      	    idx:key,
+		            val:item// modify item defaults
+		        });
+		        self.collection.add(addItem);
+		  	});
+	      });   
 	    },
 	    render: function(){
 	      var self = this;      
-	      $(this.el).append("<button id='add'>Add list item</button>");
-	      $(this.el).append("<ul></ul>");
+	      $(this.el).append("<button id='add'>Add list item</button>");	      
+	      $(this.el).append("<ul></ul>");	      
 	      _(this.collection.models).each(function(item){ // in case collection is not empty
 	        self.appendItem(item);
 	      }, this);
@@ -93,7 +102,8 @@ require(['backbone','jquery','underscore'], function(Backbone, $, _){
 	      this.counter++;
 	      var item = new Item();
 	      item.set({
-	        part2: item.get('part2') + this.counter // modify item defaults
+	      	idx: item.get('idx'),
+	        val: item.get('val') + this.counter // modify item defaults
 	      });
 	      this.collection.add(item); // add item to collection; view is updated via event 'add'
 	    },

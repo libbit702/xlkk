@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <title>hello-backbonejs</title>
+  </head>
+  <body>
+  	<script type="text/template" id="item-template">    
+    <span style="color:black;"><%= idx %> <%= val %></span>  <span class="swap" style="font-family:sans-serif; color:blue; cursor:pointer;">[swap]</span> <span class="delete" style="cursor:pointer; color:red; font-family:sans-serif;">[delete]</span>
+  </script>
+  
+  <script type="text/template" id="vip-template">    
+    尊贵的<%= type==3 ? "经济套餐" : "豪华套餐" %>用户,套餐到期时间：<%= date_expire %><span class="vip" style="font-family:sans-serif; color:blue; cursor:pointer;">[vip]</span><span class="jinji" style="font-family:sans-serif; color:blue; cursor:pointer;">[jinji]</span>
+  </script>
+<script type="text/javascript" src="../../require.js"></script>
+<script type="text/javascript" src="backbone_vip_test.js"></script>
+
+  </body>
+  </html>

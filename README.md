@@ -28,6 +28,8 @@
 
 [JSDOC](http://code.google.com/p/jsdoc-toolkit/ "JSDOC Toolkits") 生成JS文档注释 - 为后来的模块使用者提供文档帮助
 
+[BackBone](http://backbonejs.org/ "BackBone") JS的MVC框架 - 整合后台与前端交互展示，不再无脑的用js拼接html
+
 ### 目录结构 ###
 
  -- appDir | 根目录
@@ -62,3 +64,6 @@ node pathto/r.js -o baseUrl=pathtobase paths.jquery=pathtojquery(empty if no nee
 2. [女人公敌](http://vip.kankan.com/topics/nrgd/ "女人公敌") - 压缩
 3. [2013金像奖专题](http://topics.kankan.com/2013jxj/ "2013金像奖专题") - 没有压缩JS文件，请求数也会很多
 4. ToDo:[付费首页改版](http://vip.kankan.com/ "付费首页改版")
+
+## 4. Backbone ##
+Todo:可以单独拿出来使用和讲解

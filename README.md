@@ -63,7 +63,11 @@ node pathto/r.js -o baseUrl=pathtobase paths.jquery=pathtojquery(empty if no nee
 1. [迅雷影院](http://yy.xunlei.com/ "迅雷影院") - 压缩
 2. [女人公敌](http://vip.kankan.com/topics/nrgd/ "女人公敌") - 压缩
 3. [2013金像奖专题](http://topics.kankan.com/2013jxj/ "2013金像奖专题") - 没有压缩JS文件，请求数也会很多
-4. ToDo:[付费首页改版](http://vip.kankan.com/ "付费首页改版")
+4. [付费首页改版](http://vip.kankan.com/ "付费首页改版")
+5. [钢铁侠专题](http://topics.kankan.com/gtx3/ "钢铁侠专题")
 
-## 4. Backbone ##
-Todo:可以单独拿出来使用和讲解
+## 4. Backbone|Underscore ##
+上面示例中的###钢铁侠###专题第一个使用backbone+jquery+underscore+prototype完成的专题，backbone大量减轻了前端编码工作，可以让开发者更专心考虑逻辑问题
+Backbone强依赖Underscore，但对于jquery是部分依赖，例如View中的events设置，可视情况使用
+Underscore的话可以在平时操作一些基本代码的时候考虑使用，有非常优秀的基础功能供使用
+

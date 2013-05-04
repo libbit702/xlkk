@@ -27,11 +27,17 @@ RequireJS官方插件，类似jQuery的ready方法
 ## HashTable ## | done
 使用Object包装的类，曾用于看看通用PV
 
+## History ## | ignore
+模拟HTML5的HISTORY兼容类
+
 ## ie6png ## | ignore
 png图片在IE6下显示兼容工具
 
 ## ioctrl ## | done
 Web插件DAPCTRL及sCookie的包装类
+
+## qrcode|jquery ## | ignore
+客户端二维码类库，依赖jQuery
 
 ## json ## -- ignore
 json编码解码的独立类

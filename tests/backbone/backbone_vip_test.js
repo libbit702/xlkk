@@ -1,11 +1,12 @@
 requirejs.config({
 	baseUrl: "../../src/",
-    urlArgs: "rd="+Math.random(),
-    paths: {
-        backbone: 'backbone/backbone',
+    //urlArgs: "rd="+Math.random(),
+    paths: {        
         underscore: 'underscore/underscore',
+        backbone: 'backbone/backbone',
         jquery:'http://misc.web.xunlei.com/www_v6/js/lib/jquery-1.8.2.min'
     },
+    waitSeconds:30,
     shim: {
         'backbone': {
             //These script dependencies should be loaded before loading
@@ -21,7 +22,8 @@ requirejs.config({
     }
 });
 
-require(['backbone','jquery','underscore', 'vip'], function(Backbone, $, _, vip){	
+require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip){	
+	Backbone.$ = jQuery;
     var baoyueUser = {
         daily:"15",
         expire:"2013-07-03",

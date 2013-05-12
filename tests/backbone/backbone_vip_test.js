@@ -2,27 +2,29 @@ requirejs.config({
 	baseUrl: "../../src/",
     //urlArgs: "rd="+Math.random(),
     paths: {        
-        underscore: 'underscore/underscore',
-        backbone: 'backbone/backbone',
-        jquery:'http://misc.web.xunlei.com/www_v6/js/lib/jquery-1.8.2.min'
+        underscore: "underscore/underscore",
+        backbone: "backbone/backbone",
+        jquery:"http://misc.web.xunlei.com/www_v6/js/lib/jquery-1.8.2.min",
+		template:"../tests/backbone/template"
     },
     waitSeconds:30,
     shim: {
-        'backbone': {
+        "backbone": {
             //These script dependencies should be loaded before loading
             //backbone.js
-            deps: ['underscore','jquery'],
-            //Once loaded, use the global 'Backbone' as the
+            deps: ["underscore","jquery"],
+            //Once loaded, use the global "Backbone" as the
             //module value.
-            exports: 'Backbone'
+            exports: "Backbone"
         },
-        'underscore': {
-            exports: '_'
+        "underscore": {
+            exports: "_"
         }
     }
 });
 
-require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip){	
+require(["jquery","underscore", "backbone", "vip", "text!template/1.html"], function($, _, Backbone, vip, tpl){	
+	console.log(tpl);
 	Backbone.$ = jQuery;
     var baoyueUser = {
         daily:"15",
@@ -65,7 +67,7 @@ require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip
 	var Item = Backbone.Model.extend({
 	    defaults: {
 	      type: 0,
-	      date_expire: ''
+	      date_expire: ""
 	    }
 	  });
 
@@ -74,18 +76,18 @@ require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip
 	  });  
 
 	var ItemView = Backbone.View.extend({
-	    tagName: 'li', // name of (orphan) root tag in this.el
-	    template: _.template($('#vip-template').html()),
+	    tagName: "li", // name of (orphan) root tag in this.el
+	    template: _.template(tpl),
 	    events: { 
-	      'click span.vip':  'vip',
-          'click span.jinji':  'jinji',
-	      'click span.delete': 'remove'
+	      "click span.vip":  "vip",
+          "click span.jinji":  "jinji",
+	      "click span.delete": "remove"
 	    },  
 	    initialize: function(){
-		  _.bindAll(this, 'render', 'unrender', 'vip', 'jinji', 'remove'); // every function that uses 'this' as the current object should be in here
+		  _.bindAll(this, "render", "unrender", "vip", "jinji", "remove"); // every function that uses "this" as the current object should be in here
 
-	      this.model.bind('change', this.render);
-	      this.model.bind('remove', this.unrender);
+	      this.model.bind("change", this.render);
+	      this.model.bind("remove", this.unrender);
 	    },
 	    render: function(){
 	      $(this.el).html(this.template(this.model.toJSON()));	      
@@ -112,22 +114,22 @@ require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip
 	  });
 
 	var ListView = Backbone.View.extend({    
-	    el: $('body'), // attaches `this.el` to an existing element.
+	    el: $("body"), // attaches `this.el` to an existing element.
 	    events: {
-	      //'click button#add': 'addItem'
+	      //"click button#add": "addItem"
 	    },
 	    initialize: function(){
-		   _.bindAll(this, 'render', 'addItem', 'appendItem'); // every function that uses 'this' as the current object should be in here
+		   _.bindAll(this, "render", "addItem", "appendItem"); // every function that uses "this" as the current object should be in here
 	      
 	      this.collection = new List();
-	      this.collection.bind('add', this.appendItem); // collection event binder
+	      this.collection.bind("add", this.appendItem); // collection event binder
 
 	      this.render();
           
 	      var addItem = new Item();
            addItem.set({
                 type:3,
-                date_expire:'2013-04-24'
+                date_expire:"2013-04-24"
            });
            this.collection.add(addItem);
 	    },
@@ -141,16 +143,16 @@ require(['jquery','underscore', 'backbone', 'vip'], function($, _, Backbone, vip
 	    addItem: function(){
 	      var item = new Item();
 	      item.set({
-	      	type: item.get('type'),
-	        date_expire: item.get('date_expire')
+	      	type: item.get("type"),
+	        date_expire: item.get("date_expire")
 	      });
-	      this.collection.add(item); // add item to collection; view is updated via event 'add'
+	      this.collection.add(item); // add item to collection; view is updated via event "add"
 	    },
 	    appendItem: function(item){
 	      var itemView = new ItemView({
 	        model: item
 	      });
-	      $('ul', this.el).append(itemView.render().el);
+	      $("ul", this.el).append(itemView.render().el);
 	    }
 	});
 	var listView = new ListView(); 

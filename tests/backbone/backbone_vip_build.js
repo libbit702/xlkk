@@ -8,7 +8,8 @@
         backbone: 'backbone/backbone-min',
        	underscore: 'underscore/underscore-min',
         jquery:'http://misc.web.xunlei.com/www_v6/js/lib/jquery-1.8.2.min',  
-        vip: 'vip'
+        vip: 'vip',
+		template:"../tests/backbone/template"
     },
     shim: {
         'backbone': {

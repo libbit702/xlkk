@@ -22,6 +22,7 @@ requirejs.config({
 });
 
 require(['backbone','jquery','underscore'], function(Backbone, $, _){	
+	console.log(tpl);
 	var Item = Backbone.Model.extend({
 	    defaults: {
 	      idx: 0,

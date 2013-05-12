@@ -5,11 +5,14 @@
     optimize:'none',
     paths: {      
     	backbone_vip_test:'../tests/backbone/backbone_vip_test',  
-        backbone: 'backbone/backbone-min',
-       	underscore: 'underscore/underscore-min',
+        backbone: 'backbone/backbone',
+       	underscore: 'underscore/underscore',
         jquery:'http://misc.web.xunlei.com/www_v6/js/lib/jquery-1.8.2.min',  
-        vip: 'vip',
-		template:"../tests/backbone/template"
+        //vip: 'vip',
+		template:"../tests/backbone/template",
+		model:"../tests/backbone",
+		collection:"../tests/backbone",
+		view:"../tests/backbone"
     },
     shim: {
         'backbone': {

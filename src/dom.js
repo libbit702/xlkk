@@ -71,7 +71,7 @@ define(function(){
         removeClass : function(cls) {
             if (this.hasClass(cls)) {
                 var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-                this.node.className = this.node.className.replace(reg, ' ');
+                this.node.className = Dom.trim(this.node.className.replace(reg, ' '));
             }
             return this;
         },

@@ -103,6 +103,16 @@ define(['dom','eventutil'], function(d,e){
 			}
 			this.tabs[index].addClass(this.config.cnon);
 			this.lists[index].show();
+            
+            if(this.config.callback){
+                for(key in this.config.callback){
+                    if(index == key || 'all' == key){
+                        (this.config.callback[key])(index);
+                    }
+                }
+            }
+            
+            this.idx = index;
 		}
 	};
 

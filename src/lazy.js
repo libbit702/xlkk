@@ -42,7 +42,7 @@ define(['eventutil'], function(e){
 					width = img.clientWidth;
 					height = img.clientHeight;
 					wh=position(img);
-					if( (wh.Top>=min.Top && wh.Top<=max.Top && wh.Left>=min.Left && wh.Left<=max.Left) || ((wh.Top+height)>=min.Top && wh.Top<=max.Top && (wh.Left+width)>=min.Left && wh.Left<=max.Left)){
+					if( (wh.Top>min.Top && wh.Top<max.Top && wh.Left>min.Left && wh.Left<max.Left) || ((wh.Top+height)>min.Top && wh.Top<max.Top && (wh.Left+width)>min.Left && wh.Left<max.Left)){
 						(function(imgobj,realsrc){
 							setTimeout(function() {
 								imgobj.src = realsrc;

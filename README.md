@@ -63,8 +63,9 @@ node pathto/r.js -o baseUrl=pathtobase paths.jquery=pathtojquery(empty if no nee
 1. [迅雷影院](http://yy.xunlei.com/ "迅雷影院") - 压缩
 2. [女人公敌](http://vip.kankan.com/topics/nrgd/ "女人公敌") - 压缩
 3. [2013金像奖专题](http://topics.kankan.com/2013jxj/ "2013金像奖专题") - 没有压缩JS文件，请求数也会很多
-4. [付费首页改版](http://vip.kankan.com/ "付费首页改版")
+<s>4. [付费首页改版](http://vip.kankan.com/ "付费首页改版")</s>
 5. [钢铁侠专题](http://topics.kankan.com/gtx3/ "钢铁侠专题")
+6. [迅雷看看首页](http://www.kankan.com/ "迅雷看看首页")
 
 ## 4. Backbone|Underscore ##
 上面示例中的###钢铁侠###专题第一个使用backbone+jquery+underscore+prototype完成的专题，backbone大量减轻了前端编码工作，可以让开发者更专心考虑逻辑问题

@@ -32,8 +32,17 @@ define(function(){
          * @return {Object} dom类的实例
          */
         init:function(id){
-            this.node = document.getElementById(id);
-            return this;
+			if(!id){
+				return this;
+			}
+
+			if(typeof id === "string"){
+				this.node = document.getElementById(id);				
+				
+			}else if(id.nodeType){
+				this.node = id;
+			}
+			return this;
         },
 
         /**
@@ -148,6 +157,22 @@ define(function(){
             }
             return this;
         },
+
+		/**
+         * 取得节点的样式
+         *
+         * @method module:dom#getStyle
+         * @param {DOMObject} elem
+         * @return {Object} dom object for js chain
+         */
+		getStyle : function() {
+			if (this.node.currentStyle) {
+				return this.node.currentStyle;
+			} else if (window.getComputedStyle) {
+				return getComputedStyle(this.node, null);
+			}
+			return null;
+		},
 
         /**
          * 获取节点在文档中的位置

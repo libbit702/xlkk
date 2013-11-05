@@ -6,6 +6,7 @@ require.config({
 require(["scrollbar"], function(ScrollBar) {
     var scroll = new ScrollBar();
 	scroll.init({
-		barContent: 'text_div'
+		barContent: 'text_div',
+		borderValue:5
 	});
 });

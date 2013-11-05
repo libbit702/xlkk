@@ -44,13 +44,15 @@ define(['dom', 'eventutil','node'],function(d,e,FX, undefined){
 
 			this.node = new FX.Node(config.div);
 
-			if(this.config.auto === true){
+			if(this.config.circle === true){
                 if(this.config.valign === true){
                     d(this.config.div).setHtml(d(this.config.div).getHtml()+d(this.config.div).getHtml());
                 }else{
                     d(this.config.divSibling).setHtml(d(this.config.div).getHtml());
                 }
-                this.auto();
+                if(this.config.auto === true){
+                    this.auto();
+                }
 			}
 
 			var _self = this;
@@ -103,7 +105,7 @@ define(['dom', 'eventutil','node'],function(d,e,FX, undefined){
 				return;
 			}
 
-			if(!this.config.auto && this.config.current==0){
+			if(!this.config.circle && this.config.current==0){
 				return;
 			}else{
 				this.go(this.config.current-1);
@@ -120,7 +122,7 @@ define(['dom', 'eventutil','node'],function(d,e,FX, undefined){
 				return;
 			}
 
-			if(!this.config.auto && this.config.current==this.config.allpage-1){
+			if(!this.config.circle && this.config.current==this.config.allpage-1){
 				return;
 			}else{			
 				this.go(this.config.current+1);

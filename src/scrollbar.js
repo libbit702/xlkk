@@ -4,7 +4,8 @@
  * @example  
 	var scroll = new ScrollBar();
 	scroll.init({
-		barContent: 'text_div'
+		barContent: 'text_div',//滚动区域
+		borderValue:5//边框值，让滚动条适配滚动区域
 	});
  */
 define(['dom','eventutil'], function(d, et){
@@ -28,7 +29,8 @@ define(['dom','eventutil'], function(d, et){
 			barClass:'scrollBar',
 			barHoverClass: 'scrollBarHover',
 			barActiveClass: 'scrollBarActive',
-			barContent: null
+			barContent: null,
+			borderValue:0
 		};
 		this.options = {};
 		this.bar = doc.createElement('div');
@@ -49,8 +51,8 @@ define(['dom','eventutil'], function(d, et){
 			d(el).setStyle('overflow', 'hidden');
 			d(el).setStyle('position', 'relative');
 			d(el).setStyle('padding', '0px');
-			d(el).setStyle('width', style.width);
-			d(el).setStyle('height', style.height);
+			d(el).setStyle('width', parseInt(style.width) + 2 * this.options.borderValue + 'px');
+			d(el).setStyle('height', parseInt(style.height) + 2 * this.options.borderValue + 'px');
 
 			var contentParent = this.content.parentNode;			
 			el.appendChild(this.content);
@@ -141,13 +143,12 @@ define(['dom','eventutil'], function(d, et){
 				this.marginTop = 0;
 			if (this.marginTop > this.content.clientHeight - this.bar.offsetHeight)
 				this.marginTop = this.content.clientHeight - this.bar.offsetHeight,this.scrollToBottom();
-			this.bar.style.marginTop = this.marginTop + "px";
+			this.bar.style.marginTop = this.marginTop + this.options.borderValue + "px";
 			if (b == 0){
 				this.onscroll(b, b);
 			}
-			var a = (this.content.scrollHeight - this.content.offsetHeight) * parseInt(this.marginTop) / (this.content.offsetHeight - this.bar.offsetHeight);
+			var a = (this.content.scrollHeight - this.content.offsetHeight + 2*this.options.borderValue) * parseInt(this.marginTop) / (this.content.offsetHeight - 2*this.options.borderValue - this.bar.offsetHeight);
 			this.content.scrollTop = a;
-			//this.content.style.marginTop = a+'px';
 			this.onscroll(a, b)
 		},
 

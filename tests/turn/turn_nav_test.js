@@ -18,6 +18,7 @@ require(["turn"], function(Turn) {
     	auto:false,
         valign:false,
     	divSibling:'div_movierecom_1',
+        circle:true,
     	time:3000,
         nav:'ykd_tab_',
         speed:0.3

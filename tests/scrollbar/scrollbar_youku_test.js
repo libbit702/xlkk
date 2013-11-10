@@ -6,6 +6,7 @@ require.config({
 require(["scrollbar_youku"], function(ScrollBar) {
     var scroll = new ScrollBar();
 	scroll.init({
-		barContent: 'items-container'
+		barContent: 'items-container',
+		borderValue: 1
 	});
 });

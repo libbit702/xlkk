@@ -26,7 +26,8 @@ define(['dom','eventutil'], function(d, et){
 	function ScrollBar(){		
 		this.defaults = {
 			barContent: null,
-			barId:'scrollBar'
+			barId:'scrollBar',
+			borderValue:0
 		};
 		this.options = {};
 		//this.bar = doc.createElement('div');
@@ -124,12 +125,13 @@ define(['dom','eventutil'], function(d, et){
 				this.marginTop = 0;
 			if (this.marginTop > this.content.clientHeight - this.bar.offsetHeight)
 				this.marginTop = this.content.clientHeight - this.bar.offsetHeight,this.scrollToBottom();
-			this.bar.style.marginTop = this.marginTop + "px";
+			this.bar.style.marginTop = this.marginTop + this.options.borderValue + "px";
 			if (b == 0){
 				this.onscroll(b, b);
 			}
-			var a = (this.content.scrollHeight - this.content.offsetHeight) * parseInt(this.marginTop) / (this.content.offsetHeight - this.bar.offsetHeight);
-			this.content.scrollTop = a;
+			//var a = (this.content.scrollHeight - this.content.offsetHeight) * parseInt(this.marginTop) / (this.content.offsetHeight - this.bar.offsetHeight);
+			var a = (this.content.scrollHeight - this.content.offsetHeight + 2*this.options.borderValue) * parseInt(this.marginTop) / (this.content.offsetHeight - 2*this.options.borderValue - this.bar.offsetHeight);
+			//this.content.scrollTop = a;
 			this.content.style.marginTop = -a+'px';
 			this.onscroll(a, b)
 		},

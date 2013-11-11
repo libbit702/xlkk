@@ -41,15 +41,12 @@ define(['dom','eventutil'], function(d,et){
 				this.tabs[i] = d(this.config.identifyTab+i);
 				this.lists[i] = d(this.config.identifyList+i);	
 				(function(i){
-		            et.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(e){
-						if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
-							_self.show(i, true)
-						}
-					});
+		            
 		            if(_self.config.auto === true){
 		            	et.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(e){
 							if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
 								_self.pause();
+								_self.show(i);
 							}
 						}); 
 		            	et.addEventHandler(_self.lists[i].getEle(), 'mouseover', function(e){
@@ -59,15 +56,23 @@ define(['dom','eventutil'], function(d,et){
 						});
 			            et.addEventHandler(_self.tabs[i].getEle(), 'mouseout', function(e){
 							if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
+								_self.pause();
 								_self.auto();
 							}
 						}); 
 			            et.addEventHandler(_self.lists[i].getEle(), 'mouseout', function(e){
 							if(et.isMouseLeaveOrEnter(e, _self.lists[i].getEle())){
+								_self.pause();
 								_self.auto();
 							}
 						}); 
-		        	}
+		        	} else {
+						et.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(e){
+							if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
+								_self.show(i);
+							}
+						});
+					}
 		        })(i)	
 			}	
 			if(this.config.auto === true) {
@@ -97,7 +102,7 @@ define(['dom','eventutil'], function(d,et){
 			if(this.idx >= this.config.count){
 				this.idx = 0;
 			}
-			this.show(this.idx, false);
+			this.show(this.idx);
 		},
 
 		/**
@@ -115,7 +120,7 @@ define(['dom','eventutil'], function(d,et){
          * @method module:switchtab#show
          * @param {Num} index 显示指定的tab
          */
-		show : function(index, has_callback){
+		show : function(index){
 			for(var i=0;i<this.config.count;i++) {
 				if (i != index) {
 					this.tabs[i].removeClass(this.config.cnon);
@@ -125,7 +130,7 @@ define(['dom','eventutil'], function(d,et){
 			this.tabs[index].addClass(this.config.cnon);
 			this.lists[index].show();
             
-            if(has_callback && this.config.callback){
+            if(this.config.callback){
                 for(key in this.config.callback){
                     if(index == key || 'all' == key){
                         (this.config.callback[key])(index);

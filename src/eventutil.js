@@ -46,6 +46,26 @@ define(function(){
             oTarget["on" + sEventType] = null;
         }
     };
+
+	/**
+      * 判断是否鼠标out或enter事件
+      *
+      * @method  module:eventutil.isMouseLeaveOrEnter
+      * @param  {Event} e  触发的事件
+      * @param  {DOMObject} target 需要进行事件触发判断的对象
+	  * @return {Boolean} 是否鼠标out或enter事件
+      */
+	EventUtil.isMouseLeaveOrEnter = function(e, target) {
+		if (e.type != 'mouseout' && e.type != 'mouseover') {
+			return false;
+		} 
+		var reltg = e.relatedTarget ? e.relatedTarget : e.type == 'mouseout' ? e.toElement : e.fromElement; 
+		while (reltg && reltg != target) 
+			reltg = reltg.parentNode; 
+		
+		return (reltg != target); 
+	};
+
     return EventUtil;
 });
 

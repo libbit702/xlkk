@@ -15,7 +15,8 @@ s1.init({
     interval:5000,//轮播时间间隔
 });
  */
-define(['dom','eventutil'], function(d,e){
+
+define(['dom','eventutil'], function(d,et){
 	function SwitchTab(){
 		this.config = {}; 
 		this.tabs = [];
@@ -40,12 +41,32 @@ define(['dom','eventutil'], function(d,e){
 				this.tabs[i] = d(this.config.identifyTab+i);
 				this.lists[i] = d(this.config.identifyList+i);	
 				(function(i){
-		            e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.show(i)});
+		            et.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(e){
+						if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
+							_self.show(i, true)
+						}
+					});
 		            if(_self.config.auto === true){
-		            	e.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(){_self.pause();}); 
-		            	e.addEventHandler(_self.lists[i].getEle(), 'mouseover', function(){_self.pause();});
-			            e.addEventHandler(_self.tabs[i].getEle(), 'mouseout', function(){_self.auto();}); 
-			            e.addEventHandler(_self.lists[i].getEle(), 'mouseout', function(){_self.auto();}); 
+		            	et.addEventHandler(_self.tabs[i].getEle(), 'mouseover', function(e){
+							if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
+								_self.pause();
+							}
+						}); 
+		            	et.addEventHandler(_self.lists[i].getEle(), 'mouseover', function(e){
+							if(et.isMouseLeaveOrEnter(e, _self.lists[i].getEle())){
+								_self.pause();
+							}
+						});
+			            et.addEventHandler(_self.tabs[i].getEle(), 'mouseout', function(e){
+							if(et.isMouseLeaveOrEnter(e, _self.tabs[i].getEle())){
+								_self.auto();
+							}
+						}); 
+			            et.addEventHandler(_self.lists[i].getEle(), 'mouseout', function(e){
+							if(et.isMouseLeaveOrEnter(e, _self.lists[i].getEle())){
+								_self.auto();
+							}
+						}); 
 		        	}
 		        })(i)	
 			}	
@@ -76,7 +97,7 @@ define(['dom','eventutil'], function(d,e){
 			if(this.idx >= this.config.count){
 				this.idx = 0;
 			}
-			this.show(this.idx);
+			this.show(this.idx, false);
 		},
 
 		/**
@@ -94,7 +115,7 @@ define(['dom','eventutil'], function(d,e){
          * @method module:switchtab#show
          * @param {Num} index 显示指定的tab
          */
-		show : function(index){
+		show : function(index, has_callback){
 			for(var i=0;i<this.config.count;i++) {
 				if (i != index) {
 					this.tabs[i].removeClass(this.config.cnon);
@@ -104,7 +125,7 @@ define(['dom','eventutil'], function(d,e){
 			this.tabs[index].addClass(this.config.cnon);
 			this.lists[index].show();
             
-            if(this.config.callback){
+            if(has_callback && this.config.callback){
                 for(key in this.config.callback){
                     if(index == key || 'all' == key){
                         (this.config.callback[key])(index);

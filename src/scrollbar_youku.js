@@ -2,10 +2,13 @@
  * @description div模拟滚动条
  * @link http://www.cnblogs.com/darkli/archive/2012/02/15/2352744.html
  * @example  
-	var scroll = new ScrollBar();
-	scroll.init({
-		barContent: 'text_div'
-	});
+	var scroll_tab_1 = new ScrollBar();
+    scroll_tab_1.init({
+         barContent: 'tabbox_list_1_scrollcontent',
+         borderValue: 1,
+         barId: 'tabbox_list_1_scrollbar',
+         scrollContent: 'tabbox_list_1'
+      });
  */
 define(['dom','eventutil'], function(d, et){
 	var doc = document,

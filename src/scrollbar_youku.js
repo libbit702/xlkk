@@ -22,17 +22,28 @@ define(['dom','eventutil'], function(d, et){
 				return args[0];
 			}
 		};
+        
+    function position(o){
+        var p={Top:0,Left:0};
+        while(!!o){
+            p.Top+=o.offsetTop;
+            p.Left+=o.offsetLeft;
+            o=o.offsetParent;
+        }
+        return p;
+    }
 
 	function ScrollBar(){		
 		this.defaults = {
 			barContent: null,
 			barId:'scrollBar',
-			borderValue:0
+			borderValue:0,
+            scrollContent:''
 		};
 		this.options = {};
-		//this.bar = doc.createElement('div');
 		this.bar = null;
 		this.content = null;
+        this.scrollObj = null;
 		this.wheelThread = 20;
 		this.isScrolling = !1;
 	}
@@ -40,8 +51,10 @@ define(['dom','eventutil'], function(d, et){
 	ScrollBar.prototype = {
 		init:function(options){
 			this.options = utils.extend(this.defaults, options || {});//bar的配置
-			this.content = d(this.options.barContent).getEle();//bar所在的位置
+			this.content = d(this.options.barContent).getEle();//文档中的真实内容
+            this.scrollObj = d(this.options.scrollContent).getEle();//实际可见的展示区域
 			this.bar = d(this.options.barId).getEle();
+            contentOffset = position(this.content.parentNode);
 			
 			this.setBarHeight();
 			var self = this;
@@ -57,6 +70,7 @@ define(['dom','eventutil'], function(d, et){
 				onMouseMove: function(e) {
 					e = e || window.event;
 					var isClickButton = (e.button === 1 || e.button === 0);
+                    
 					if (self.isScrolling && isClickButton) {
 						window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
 						self.scroll(e.clientY - self.bar.y);
@@ -65,19 +79,13 @@ define(['dom','eventutil'], function(d, et){
 					}
 				},
 				onMouseUp: function() {
-					if (self.isScrolling) {
+					if (true || self.isScrolling) {
 						self.isScrolling = 0;
 					}
 				},
-				onMouseOver: function() {				   
-					
-				},
-				onMouseOut: function() {
-					
-				},
 				onMouseWheel: function(e) {
-					e = e || window.event;
-					if (d(self.bar).getEle().style.display !== 'none') {
+					e = e || window.event;                    
+					if (self.bar.style.display !== 'none') {
 						self.D = e.wheelDelta;
 						e.returnValue = !1;
 						var dd = self.D < 0 ? self.wheelThread : 0 - self.wheelThread;
@@ -88,11 +96,36 @@ define(['dom','eventutil'], function(d, et){
 						self.scrollToBottom(e);
 					}
 				},
-				onClick: function(e) {
+                onWheel: function(e) {
+					e = e || window.event;                    
+					if (self.bar.style.display !== 'none') {
+						self.D = e.deltaY;
+						e.returnValue = !1;
+                        e.stopPropagation && e.stopPropagation();
+						e.preventDefault && e.preventDefault();
+						var dd = self.D > 0 ? self.wheelThread : 0 - self.wheelThread;
+						self.bar.y = e.clientY;
+						self.bar.t = parseInt(self.bar.style.marginTop);
+						self.scroll(dd);
+					} else {
+						self.scrollToBottom(e);
+					}
+				},
+				onBarClick: function(e) {
+                    e = e || window.event;               
+                    var doctop = document.documentElement.scrollTop || document.body.scrollTop, mousePos = e.clientY, barPos = Math.abs(Math.abs(parseInt(self.bar.style.marginTop)) +parseInt(self.bar.style.height)/2+ contentOffset.Top - doctop ); 
+                    console.log( Math.abs(parseInt(self.bar.style.marginTop)) +'_'+parseInt(self.bar.style.height)/2+'_'+contentOffset.Top +'_'+ doctop );
+					window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                    console.log(mousePos + '_' + barPos);
+                    self.scroll(mousePos - barPos);
+                    e.preventDefault && e.preventDefault();
+                    e.stopPropagation && e.stopPropagation();
+				},
+                onClick: function(e) {
 					e.stopPropagation && e.stopPropagation()
 				},
 				onDomMouseScroll: function(e) {
-					if (d(self.bar).getEle().style.display !== 'none') {
+					if (self.bar.style.display !== 'none') {
 						self.D = e.detail > 0 ? -1 : 1;
 						e.stopPropagation && e.stopPropagation();
 						e.preventDefault && e.preventDefault();
@@ -108,11 +141,12 @@ define(['dom','eventutil'], function(d, et){
 			//绑定鼠标事件
 			et.addEventHandler(this.bar, 'mousedown', events.onMouseDown);
 			et.addEventHandler(doc, 'mousemove', events.onMouseMove);
-			et.addEventHandler(this.bar, 'mouseout', events.onMouseOut);
-			et.addEventHandler(this.bar, 'mouseover', events.onMouseOver);
 			et.addEventHandler(doc, 'mouseup', events.onMouseUp);
 			et.addEventHandler(this.content, 'mousewheel', events.onMouseWheel);
+            et.addEventHandler(this.content, 'wheel', events.onWheel);
 			et.addEventHandler(this.content, 'dommousescroll', events.onDomMouseScroll);
+            //点击滚动条空白处时
+            //et.addEventHandler(this.bar.parentNode, 'click', events.onBarClick);
 		},
 
 		onscroll : doc.onscroll || function(){},
@@ -121,18 +155,23 @@ define(['dom','eventutil'], function(d, et){
 
 		scroll: function(b) {
 			this.marginTop = (this.bar.t || 0) + b;
-			if (this.marginTop < 0)
+			if (this.marginTop < 0){
 				this.marginTop = 0;
-			if (this.marginTop > this.content.clientHeight - this.bar.offsetHeight)
-				this.marginTop = this.content.clientHeight - this.bar.offsetHeight,this.scrollToBottom();
-			this.bar.style.marginTop = this.marginTop + this.options.borderValue + "px";
+            }
+			if (this.marginTop > this.scrollObj.clientHeight - this.bar.offsetHeight){
+				this.marginTop = this.scrollObj.clientHeight - this.bar.offsetHeight;
+                this.scrollToBottom();
+            }
+			this.bar.style.marginTop = this.marginTop + "px";
 			if (b == 0){
 				this.onscroll(b, b);
 			}
 			//var a = (this.content.scrollHeight - this.content.offsetHeight) * parseInt(this.marginTop) / (this.content.offsetHeight - this.bar.offsetHeight);
-			var a = (this.content.scrollHeight - this.content.offsetHeight + 2*this.options.borderValue) * parseInt(this.marginTop) / (this.content.offsetHeight - 2*this.options.borderValue - this.bar.offsetHeight);
+			var a = (this.content.scrollHeight - this.scrollObj.offsetHeight ) * parseInt(this.marginTop) / (this.scrollObj.offsetHeight - this.bar.offsetHeight);
+            a = parseInt(a);
 			//this.content.scrollTop = a;
-			this.content.style.marginTop = -a+'px';
+            
+			this.content.style.marginTop = (0-a)+'px';
 			this.onscroll(a, b)
 		},
 
@@ -140,8 +179,7 @@ define(['dom','eventutil'], function(d, et){
 			this.onscroll(0, 0);
 			this.bar.style.height = "0";
 			d(this.bar).hide();
-			this.content.offsetHeight - this.content.scrollHeight >= 0 ? (this.bar.t = 0) : (this.bar.style.height = parseInt(this.content.offsetHeight /
-					this.content.scrollHeight * this.content.offsetHeight) + "px",d(this.bar).show(),this.bar.t = parseInt(this.bar.style.marginTop));
+			this.scrollObj.offsetHeight - this.content.scrollHeight >= 0 ? (this.bar.t = 0) : (this.bar.style.height = parseInt(this.scrollObj.offsetHeight / this.content.scrollHeight * this.scrollObj.offsetHeight) + "px",d(this.bar).show(),this.bar.t = parseInt(this.bar.style.marginTop));
 			this.scroll(0);
 		}
 	}

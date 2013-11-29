@@ -2,13 +2,13 @@
  * @description div模拟滚动条
  * @link http://www.cnblogs.com/darkli/archive/2012/02/15/2352744.html
  * @example  
-	var scroll_tab_1 = new ScrollBar();
-    scroll_tab_1.init({
-         barContent: 'tabbox_list_1_scrollcontent',
-         borderValue: 1,
-         barId: 'tabbox_list_1_scrollbar',
-         scrollContent: 'tabbox_list_1'
-      });
+	var scroll_tab_0 = new ScrollBar()
+	scroll_tab_0.initBar({
+		 barContent: 'tabbox_list_0_scrollcontent',//可见容器ID
+		 borderValue: 1,//可以忽略此参数
+		 barId: 'tabbox_list_0_scrollbar',//滚动条ID
+		 scrollContent: 'tabbox_list_0'//可滚动内容容器ID
+	});
  */
 define(['dom','eventutil'], function(d, et){
 	var doc = document,
@@ -52,14 +52,15 @@ define(['dom','eventutil'], function(d, et){
 	}
 
 	ScrollBar.prototype = {
-		init:function(options){
+		initBar:function(options){
 			this.options = utils.extend(this.defaults, options || {});//bar的配置
 			this.content = d(this.options.barContent).getEle();//文档中的真实内容
             this.scrollObj = d(this.options.scrollContent).getEle();//实际可见的展示区域
 			this.bar = d(this.options.barId).getEle();
-            contentOffset = position(this.content.parentNode);
+            //contentOffset = position(this.content.parentNode);
 			
 			this.setBarHeight();
+            
 			var self = this;
 			var events = {
 				onMouseDown: function(e) {
@@ -161,6 +162,7 @@ define(['dom','eventutil'], function(d, et){
 			if (this.marginTop < 0){
 				this.marginTop = 0;
             }
+            
 			if (this.marginTop > this.scrollObj.clientHeight - this.bar.offsetHeight){
 				this.marginTop = this.scrollObj.clientHeight - this.bar.offsetHeight;
                 this.scrollToBottom();
@@ -173,7 +175,6 @@ define(['dom','eventutil'], function(d, et){
 			var a = (this.content.scrollHeight - this.scrollObj.offsetHeight ) * parseInt(this.marginTop) / (this.scrollObj.offsetHeight - this.bar.offsetHeight);
             a = parseInt(a);
 			//this.content.scrollTop = a;
-            
 			this.content.style.marginTop = (0-a)+'px';
 			this.onscroll(a, b)
 		},

@@ -36,6 +36,15 @@ define(['dom','eventutil'], function(d, et){
         return p;
     }
 
+	function getMousePos(event) {
+		var e = event || window.event;
+		var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+		var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+		var x = e.pageX || e.clientX + scrollX;
+		var y = e.pageY || e.clientY + scrollY;
+		return { 'x': x, 'y': y };
+	}
+
 	function ScrollBar(){		
 		this.defaults = {
 			barContent: null,
@@ -57,7 +66,7 @@ define(['dom','eventutil'], function(d, et){
 			this.content = d(this.options.barContent).getEle();//文档中的真实内容
             this.scrollObj = d(this.options.scrollContent).getEle();//实际可见的展示区域
 			this.bar = d(this.options.barId).getEle();
-            //contentOffset = position(this.content.parentNode);
+            contentOffset = position(this.bar.parentNode);
 			
 			this.setBarHeight();
             
@@ -117,13 +126,23 @@ define(['dom','eventutil'], function(d, et){
 				},
 				onBarClick: function(e) {
                     e = e || window.event;               
-                    var doctop = document.documentElement.scrollTop || document.body.scrollTop, mousePos = e.clientY, barPos = Math.abs(Math.abs(parseInt(self.bar.style.marginTop)) +parseInt(self.bar.style.height)/2+ contentOffset.Top - doctop ); 
-                    console.log( Math.abs(parseInt(self.bar.style.marginTop)) +'_'+parseInt(self.bar.style.height)/2+'_'+contentOffset.Top +'_'+ doctop );
-					window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
-                    console.log(mousePos + '_' + barPos);
-                    self.scroll(mousePos - barPos);
-                    e.preventDefault && e.preventDefault();
-                    e.stopPropagation && e.stopPropagation();
+                    var doctop = document.documentElement.scrollTop || document.body.scrollTop, mousePos = getMousePos(e), barPos = 0,barHeight = parseInt(self.bar.style.height), barMarginTop = Math.abs(parseInt(self.bar.style.marginTop));
+
+					if(mousePos.y > contentOffset.Top + barHeight + barMarginTop){
+						barPos = contentOffset.Top + barHeight + barMarginTop;
+					}else if(mousePos.y < contentOffset.Top + barMarginTop){
+						barPos = contentOffset.Top + barMarginTop;
+					}
+					if(barPos > 0){
+						self.isScrolling = 1;
+						self.bar.t = barMarginTop;
+						window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+						self.scroll(mousePos.y - barPos);
+						e.preventDefault && e.preventDefault();
+						e.stopPropagation && e.stopPropagation();
+						self.isScrolling = 0;
+					}
+					
 				},
                 onClick: function(e) {
 					e.stopPropagation && e.stopPropagation()
@@ -150,7 +169,7 @@ define(['dom','eventutil'], function(d, et){
             et.addEventHandler(this.content, 'wheel', events.onWheel);
 			et.addEventHandler(this.content, 'dommousescroll', events.onDomMouseScroll);
             //点击滚动条空白处时
-            //et.addEventHandler(this.bar.parentNode, 'click', events.onBarClick);
+            et.addEventHandler(this.bar.parentNode, 'click', events.onBarClick);
 		},
 
 		onscroll : doc.onscroll || function(){},

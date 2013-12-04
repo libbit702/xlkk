@@ -20,6 +20,11 @@ require(["switchtab"], function(s) {
         identifyTab:'Tab1_rebo_',
         identifyList:'List1_rebo_',
         count:5,
-        cnon:'on'
+        cnon:'on',
+		callback:{
+			all: function(i){
+				//console.log(i);
+			}
+		}
     });
 });

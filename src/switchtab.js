@@ -133,7 +133,7 @@ define(['dom','eventutil'], function(d,et){
             if(this.config.callback){
                 for(key in this.config.callback){
                     if(index == key || 'all' == key){
-                        (this.config.callback[key])(index);
+						this.config.callback[key].call(this, index);
                     }
                 }
             }

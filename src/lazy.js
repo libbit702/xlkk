@@ -26,7 +26,6 @@ define(['eventutil'], function(e){
 		}
 
 		function resize_run(){
-			if(imgs.length <= 0){return false;}
 			var i,
 			min={},
 			max={},
@@ -59,9 +58,9 @@ define(['eventutil'], function(e){
 
 		function resize(){
 			if(pResizeTimer){
-				clearTimeout(pResizeTimer);
+				return '';
 			}
-			pResizeTimer = setTimeout(resize_run, 500);
+			resize_run();
 		}
 
 		
@@ -122,14 +121,7 @@ define(['eventutil'], function(e){
 			run:function(){
 				e.addEventHandler(window,'scroll',resize);
 				resize_run();
-			},
-			
-			/**
-	         * 暴露resize_run给外部，供tab切换或其他手动运行时使用
-	         *
-	         * @method module:lazy.resize_run
-	         */
-			resize_run:resize_run
+			}
 		};
 	})();
 	return LAZY;
